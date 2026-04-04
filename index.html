@@ -1,99 +1,395 @@
-<script>
-  function showLang(lang, buttonEl) {
-    const pt = document.getElementById('pt-content');
-    const en = document.getElementById('en-content');
-    const buttons = document.querySelectorAll('.lang-btn');
-
-    if (lang === 'pt') {
-      pt.classList.remove('hidden');
-      en.classList.add('hidden');
-    } else {
-      en.classList.remove('hidden');
-      pt.classList.add('hidden');
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PantryPal | Privacy Policy and Terms</title>
+  <meta
+    name="description"
+    content="PantryPal legal pages with Privacy Policy and Terms of Service in English and Portuguese (Brazil)."
+  />
+  <style>
+    :root {
+      --bg: #f7f9fc;
+      --card: #ffffff;
+      --line: #e5e7eb;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --accent: #1f7a72;
+      --accent-strong: #16635c;
     }
 
-    buttons.forEach(btn => btn.classList.remove('active'));
-    if (buttonEl) buttonEl.classList.add('active');
-  }
+    * { box-sizing: border-box; }
 
-  function getDeepLinkUrl() {
-    const search = window.location.search || '';
-    const hash = window.location.hash || '';
-    return `pantrypal://callback${search}${hash}`;
-  }
-
-  function looksLikeAuthCallback() {
-    const fullUrl = `${window.location.search}${window.location.hash}`.toLowerCase();
-
-    return (
-      fullUrl.includes('access_token=') ||
-      fullUrl.includes('refresh_token=') ||
-      fullUrl.includes('type=signup') ||
-      fullUrl.includes('type=recovery') ||
-      fullUrl.includes('type=invite') ||
-      fullUrl.includes('type=magiclink') ||
-      fullUrl.includes('code=')
-    );
-  }
-
-  function renderOpenAppFallback() {
-    const container = document.querySelector('.container');
-    if (!container) return;
-
-    const card = document.createElement('section');
-    card.className = 'card';
-    card.innerHTML = `
-      <h2>Open PantryPal</h2>
-      <p class="muted">
-        If the app did not open automatically, tap the button below.
-      </p>
-      <p>
-        <a
-          href="${getDeepLinkUrl()}"
-          style="
-            display:inline-block;
-            background:#2c7a7b;
-            color:white;
-            text-decoration:none;
-            padding:12px 18px;
-            border-radius:12px;
-            font-weight:bold;
-          "
-        >
-          Open PantryPal
-        </a>
-      </p>
-    `;
-
-    container.insertBefore(card, container.firstChild.nextSibling);
-  }
-
-  function tryOpenAppFromAuthCallback() {
-    if (!looksLikeAuthCallback()) return;
-
-    renderOpenAppFallback();
-
-    const deepLink = getDeepLinkUrl();
-
-    // Try to open the app automatically
-    window.location.href = deepLink;
-  }
-
-  // Optional: support links like #en or #pt on page load
-  function initializeLanguageFromHash() {
-    const hash = (window.location.hash || '').toLowerCase();
-
-    if (hash === '#en') {
-      const enBtn = document.querySelectorAll('.lang-btn')[1];
-      showLang('en', enBtn);
-    } else {
-      const ptBtn = document.querySelectorAll('.lang-btn')[0];
-      showLang('pt', ptBtn);
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
     }
-  }
 
-  document.addEventListener('DOMContentLoaded', function () {
-    initializeLanguageFromHash();
-    tryOpenAppFromAuthCallback();
-  });
-</script>
+    .container {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+
+    .hero {
+      background: linear-gradient(135deg, #e9fffb, #ffffff);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 28px 24px;
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 1.9rem;
+      color: var(--accent-strong);
+    }
+
+    .subtitle {
+      margin: 8px 0 0;
+      color: var(--muted);
+    }
+
+    .lang-switch {
+      margin-top: 18px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .lang-btn {
+      border: 1px solid var(--accent);
+      background: #fff;
+      color: var(--accent-strong);
+      padding: 10px 14px;
+      border-radius: 999px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .lang-btn.active {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 24px;
+      margin-bottom: 16px;
+    }
+
+    h2 {
+      margin: 0 0 8px;
+      color: var(--accent-strong);
+      font-size: 1.45rem;
+    }
+
+    h3 {
+      margin: 20px 0 6px;
+      color: var(--accent-strong);
+      font-size: 1.05rem;
+    }
+
+    p, li {
+      font-size: 1rem;
+      margin-top: 0;
+    }
+
+    ul {
+      margin: 0 0 6px;
+      padding-left: 22px;
+    }
+
+    .muted {
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    footer {
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.93rem;
+      padding: 8px 0 28px;
+    }
+
+    a {
+      color: var(--accent-strong);
+      word-break: break-word;
+    }
+
+    @media (max-width: 640px) {
+      .container {
+        padding: 14px;
+      }
+
+      .hero, .card {
+        padding: 18px 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <section class="hero">
+      <h1>PantryPal Legal</h1>
+      <p class="subtitle">
+        Privacy Policy and Terms of Service (EN) / Politica de Privacidade e Termos de Uso (PT-BR)
+      </p>
+      <div class="lang-switch">
+        <button class="lang-btn active" onclick="showLang('en', this)">English</button>
+        <button class="lang-btn" onclick="showLang('pt', this)">Portugues (Brasil)</button>
+      </div>
+    </section>
+
+    <div id="en-content">
+      <section class="card">
+        <h2>Privacy Policy</h2>
+        <p class="muted"><strong>Effective Date:</strong> April 3, 2026 | <strong>Last Updated:</strong> April 3, 2026</p>
+
+        <p>PantryPal provides meal planning, pantry and grocery organization, recipe support, and AI-assisted food planning features.</p>
+
+        <h3>1. Data We Collect</h3>
+        <ul>
+          <li>Account data (email, authentication/session data)</li>
+          <li>Profile and preference data (language, region, goals, restrictions, household size)</li>
+          <li>User content (pantry items, recipes, lists, plans, notes)</li>
+          <li>Uploaded files (receipt and recipe images, related metadata)</li>
+          <li>AI inputs/outputs and audit logs needed to provide AI features</li>
+          <li>Billing/entitlement metadata and diagnostics/security logs</li>
+        </ul>
+
+        <h3>2. How We Use Data</h3>
+        <ul>
+          <li>Deliver and personalize PantryPal features</li>
+          <li>Generate meal plans and process receipt/recipe workflows</li>
+          <li>Maintain security, prevent abuse, and troubleshoot issues</li>
+          <li>Verify subscriptions and enforce feature entitlements</li>
+          <li>Comply with legal obligations</li>
+        </ul>
+
+        <h3>3. AI and Third-Party Processing</h3>
+        <p>To provide AI features, relevant data may be processed by trusted providers (for example, OpenAI). PantryPal also relies on cloud providers (for example, Supabase) and optional user-connected storage providers (for example, Google Drive, OneDrive).</p>
+
+        <h3>4. Data Sharing</h3>
+        <p>We do not sell personal data. We share data only with service providers needed to operate PantryPal, for legal compliance, or where you explicitly connect third-party services.</p>
+
+        <h3>5. Retention and Transfers</h3>
+        <p>We retain data only as needed for service, security, and legal purposes. Data may be processed internationally with safeguards where required.</p>
+
+        <h3>6. Your Rights</h3>
+        <p>Depending on your location, you may request access, correction, deletion, restriction/objection, portability, and consent withdrawal where applicable.</p>
+
+        <h3>7. Children</h3>
+        <p>PantryPal is not directed to children under 13 (or the local minimum age).</p>
+
+        <h3>8. Contact</h3>
+        <p>
+          Controller/Company: PantryPal<br />
+          Support and Privacy: <a href="mailto:riaanptrs@gmail.com">riaanptrs@gmail.com</a>
+        </p>
+      </section>
+
+      <section class="card">
+        <h2>Terms of Service</h2>
+        <p class="muted"><strong>Effective Date:</strong> April 3, 2026 | <strong>Last Updated:</strong> April 3, 2026</p>
+
+        <h3>1. Eligibility and Account</h3>
+        <p>You must be at least 13 years old (or local minimum age). You are responsible for your account credentials and account activity.</p>
+
+        <h3>2. Service Description</h3>
+        <p>PantryPal offers meal planning, pantry/grocery tools, recipe workflows, and AI-assisted outputs. AI outputs may be incomplete or inaccurate and should be reviewed.</p>
+
+        <h3>3. Health Disclaimer</h3>
+        <p>PantryPal is not a medical service and does not provide medical advice, diagnosis, or treatment.</p>
+
+        <h3>4. Subscriptions</h3>
+        <p>Some features require paid subscriptions. Billing, renewals, cancellations, and refunds are managed by your app store/provider policies.</p>
+
+        <h3>5. Acceptable Use</h3>
+        <ul>
+          <li>No unlawful use</li>
+          <li>No abuse, disruption, or unauthorized access attempts</li>
+          <li>No malicious or fraudulent content</li>
+        </ul>
+
+        <h3>6. Liability</h3>
+        <p>PantryPal is provided "as is" and "as available" to the extent permitted by law.</p>
+
+        <h3>7. Contact</h3>
+        <p>Support: <a href="mailto:riaanptrs@gmail.com">riaanptrs@gmail.com</a></p>
+      </section>
+    </div>
+
+    <div id="pt-content" class="hidden">
+      <section class="card">
+        <h2>Politica de Privacidade</h2>
+        <p class="muted"><strong>Data de Vigencia:</strong> 3 de abril de 2026 | <strong>Ultima Atualizacao:</strong> 3 de abril de 2026</p>
+
+        <p>O PantryPal oferece planejamento de refeicoes, organizacao de despensa e compras, suporte a receitas e recursos com IA.</p>
+
+        <h3>1. Dados que Coletamos</h3>
+        <ul>
+          <li>Dados de conta (e-mail e autenticacao/sessao)</li>
+          <li>Dados de perfil e preferencias (idioma, regiao, objetivos, restricoes, tamanho da familia)</li>
+          <li>Conteudo do usuario (itens, receitas, listas, planos e anotacoes)</li>
+          <li>Arquivos enviados (imagens de recibos/receitas e metadados)</li>
+          <li>Entradas/saidas de IA e logs de auditoria necessarios para recursos de IA</li>
+          <li>Dados de assinatura/beneficios e logs de diagnostico/seguranca</li>
+        </ul>
+
+        <h3>2. Como Usamos os Dados</h3>
+        <ul>
+          <li>Entregar e personalizar funcionalidades do PantryPal</li>
+          <li>Gerar planos e processar fluxos de recibo/receita</li>
+          <li>Manter seguranca, prevenir abuso e corrigir problemas</li>
+          <li>Verificar assinaturas e aplicar beneficios</li>
+          <li>Cumprir obrigacoes legais</li>
+        </ul>
+
+        <h3>3. IA e Terceiros</h3>
+        <p>Para recursos com IA, dados relevantes podem ser processados por provedores confiaveis (por exemplo, OpenAI). O PantryPal tambem usa provedores de nuvem (por exemplo, Supabase) e armazenamento opcional conectado pelo usuario (por exemplo, Google Drive, OneDrive).</p>
+
+        <h3>4. Compartilhamento</h3>
+        <p>Nao vendemos dados pessoais. Compartilhamos apenas com prestadores necessarios, por exigencia legal, ou quando voce conecta servicos de terceiros.</p>
+
+        <h3>5. Retencao e Transferencias</h3>
+        <p>Retemos dados pelo tempo necessario para servico, seguranca e obrigacoes legais. Dados podem ser processados internacionalmente com salvaguardas quando exigido.</p>
+
+        <h3>6. Seus Direitos</h3>
+        <p>Conforme sua jurisdicao, voce pode solicitar acesso, correcao, exclusao, oposicao/restricao, portabilidade e revogacao de consentimento quando aplicavel.</p>
+
+        <h3>7. Criancas</h3>
+        <p>O PantryPal nao e direcionado a menores de 13 anos (ou idade minima local).</p>
+
+        <h3>8. Contato</h3>
+        <p>
+          Controlador/Empresa: PantryPal<br />
+          Suporte e Privacidade: <a href="mailto:riaanptrs@gmail.com">riaanptrs@gmail.com</a>
+        </p>
+      </section>
+
+      <section class="card">
+        <h2>Termos de Uso</h2>
+        <p class="muted"><strong>Data de Vigencia:</strong> 3 de abril de 2026 | <strong>Ultima Atualizacao:</strong> 3 de abril de 2026</p>
+
+        <h3>1. Elegibilidade e Conta</h3>
+        <p>Voce deve ter pelo menos 13 anos (ou idade minima local). Voce e responsavel pelas credenciais e atividades da sua conta.</p>
+
+        <h3>2. Descricao do Servico</h3>
+        <p>O PantryPal oferece planejamento de refeicoes, ferramentas de despensa/compras, fluxos de receita e resultados assistidos por IA. Respostas de IA podem conter imprecisoes e devem ser revisadas.</p>
+
+        <h3>3. Aviso de Saude</h3>
+        <p>O PantryPal nao e servico medico e nao fornece aconselhamento medico, diagnostico ou tratamento.</p>
+
+        <h3>4. Assinaturas</h3>
+        <p>Alguns recursos exigem assinatura paga. Cobranca, renovacao, cancelamento e reembolso seguem as politicas da loja/provedor.</p>
+
+        <h3>5. Uso Aceitavel</h3>
+        <ul>
+          <li>Nao usar para atividades ilegais</li>
+          <li>Nao abusar, interromper, ou tentar acesso nao autorizado</li>
+          <li>Nao enviar conteudo malicioso ou fraudulento</li>
+        </ul>
+
+        <h3>6. Responsabilidade</h3>
+        <p>O PantryPal e fornecido "como esta" e "conforme disponivel", no limite permitido por lei.</p>
+
+        <h3>7. Contato</h3>
+        <p>Suporte: <a href="mailto:riaanptrs@gmail.com">riaanptrs@gmail.com</a></p>
+      </section>
+    </div>
+
+    <footer>
+      PantryPal Legal Page
+    </footer>
+  </div>
+
+  <script>
+    function showLang(lang, buttonEl) {
+      const pt = document.getElementById('pt-content');
+      const en = document.getElementById('en-content');
+      const buttons = document.querySelectorAll('.lang-btn');
+
+      if (lang === 'pt') {
+        pt.classList.remove('hidden');
+        en.classList.add('hidden');
+      } else {
+        en.classList.remove('hidden');
+        pt.classList.add('hidden');
+      }
+
+      buttons.forEach((btn) => btn.classList.remove('active'));
+      if (buttonEl) buttonEl.classList.add('active');
+    }
+
+    function getDeepLinkUrl() {
+      const search = window.location.search || '';
+      const hash = window.location.hash || '';
+      return `pantrypal://callback${search}${hash}`;
+    }
+
+    function looksLikeAuthCallback() {
+      const fullUrl = `${window.location.search}${window.location.hash}`.toLowerCase();
+      return (
+        fullUrl.includes('access_token=') ||
+        fullUrl.includes('refresh_token=') ||
+        fullUrl.includes('type=signup') ||
+        fullUrl.includes('type=recovery') ||
+        fullUrl.includes('type=invite') ||
+        fullUrl.includes('type=magiclink') ||
+        fullUrl.includes('code=')
+      );
+    }
+
+    function renderOpenAppFallback() {
+      const container = document.querySelector('.container');
+      if (!container) return;
+
+      const card = document.createElement('section');
+      card.className = 'card';
+      card.innerHTML = `
+        <h2>Open PantryPal</h2>
+        <p class="muted">If the app did not open automatically, tap the button below.</p>
+        <p>
+          <a
+            href="${getDeepLinkUrl()}"
+            style="
+              display:inline-block;
+              background:#1f7a72;
+              color:#fff;
+              text-decoration:none;
+              padding:12px 18px;
+              border-radius:12px;
+              font-weight:700;
+            "
+          >
+            Open PantryPal
+          </a>
+        </p>
+      `;
+
+      container.insertBefore(card, container.firstChild.nextSibling);
+    }
+
+    function tryOpenAppFromAuthCallback() {
+      if (!looksLikeAuthCallback()) return;
+      renderOpenAppFallback();
+      window.location.href = getDeepLinkUrl();
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+      tryOpenAppFromAuthCallback();
+    });
+  </script>
+</body>
+</html>
