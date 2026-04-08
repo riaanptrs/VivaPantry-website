@@ -446,6 +446,18 @@
           : 'Trying to open VivaPantry. If nothing happens, tap the manual link below or open this page in Safari.';
       }
 
+      // Use an actual anchor click from the button tap so mobile browsers treat
+      // this like a user-initiated deep-link attempt.
+      const launcher = document.createElement('a');
+      launcher.href = primary;
+      launcher.style.display = 'none';
+      launcher.setAttribute('aria-hidden', 'true');
+      document.body.appendChild(launcher);
+      launcher.click();
+      setTimeout(() => {
+        launcher.remove();
+      }, 1000);
+
       // Some mobile browsers ignore direct location changes for custom schemes.
       const iframe = document.createElement('iframe');
       iframe.style.display = 'none';
