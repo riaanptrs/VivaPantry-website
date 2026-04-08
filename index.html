@@ -400,20 +400,20 @@
     function getDeepLinkUrl() {
       const search = window.location.search || '';
       const hash = window.location.hash || '';
-      return `vivapantry:///callback${search}${hash}`;
+      return `vivapantry://callback${search}${hash}`;
     }
 
-    function getLegacyDeepLinkUrl() {
+    function getAlternateDeepLinkUrl() {
       const search = window.location.search || '';
       const hash = window.location.hash || '';
-      return `vivapantry://callback${search}${hash}`;
+      return `vivapantry:///callback${search}${hash}`;
     }
 
     function getAndroidIntentUrl() {
       const search = window.location.search || '';
       const hash = window.location.hash || '';
       const payload = `${search}${hash}`.replace(/#/g, '%23');
-      return `intent:///callback${payload}#Intent;scheme=vivapantry;package=com.riaan.vivapantry;end`;
+      return `intent://callback${payload}#Intent;scheme=vivapantry;package=com.riaan.vivapantry;end`;
     }
 
     function looksLikeAuthCallback() {
@@ -431,7 +431,7 @@
 
     function openApp() {
       const primary = getDeepLinkUrl();
-      const legacy = getLegacyDeepLinkUrl();
+      const alternate = getAlternateDeepLinkUrl();
       const androidIntent = getAndroidIntentUrl();
       const fallbackLink = document.getElementById('manual-open-link');
       const status = document.getElementById('open-app-status');
@@ -456,7 +456,7 @@
       window.location.href = primary;
 
       setTimeout(() => {
-        window.location.href = legacy;
+        window.location.href = alternate;
       }, 250);
 
       setTimeout(() => {
