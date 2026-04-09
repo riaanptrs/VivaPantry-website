@@ -101,11 +101,8 @@
     .status-note { margin-top: 12px; }
     .hidden { display: none; }
     .legal-consent-card {
-      position: sticky;
-      bottom: 14px;
       background: rgba(255, 255, 255, 0.97);
-      backdrop-filter: blur(10px);
-      box-shadow: 0 18px 40px rgba(31, 41, 55, 0.12);
+      box-shadow: 0 18px 40px rgba(31, 41, 55, 0.08);
     }
     .legal-consent-title { margin-bottom: 10px; }
     .action-row {
@@ -115,12 +112,16 @@
       align-items: center;
       margin-top: 16px;
     }
+    .scroll-lock-note {
+      margin: 0 0 12px;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
     footer { text-align: center; color: var(--muted); font-size: 0.93rem; padding: 8px 0 28px; }
     a { color: var(--accent-strong); word-break: break-word; }
     @media (max-width: 640px) {
       .container { padding: 14px; }
       .hero, .card { padding: 18px 14px; }
-      .legal-consent-card { bottom: 10px; }
       .action-row {
         flex-direction: column;
         align-items: stretch;
@@ -539,8 +540,13 @@
             ? 'Agora que voce chegou ao final da pagina, confirme a aceitacao dos termos para voltar ao app.'
             : 'Now that you reached the end of the page, confirm acceptance of the terms to go back to the app.'}
         </p>
+        <p id="scroll-lock-note" class="scroll-lock-note">
+          ${prefersPortuguese
+            ? 'Role ate o fim da pagina para liberar a aceitacao dos termos.'
+            : 'Scroll to the bottom of the page to unlock terms acceptance.'}
+        </p>
         <label class="consent-row">
-          <input id="terms-consent-checkbox" type="checkbox" />
+          <input id="terms-consent-checkbox" type="checkbox" disabled />
           <span class="consent-label">
             ${prefersPortuguese
               ? 'Li e aceito a Politica de Privacidade e os Termos de Uso do VivaPantry.'
@@ -581,18 +587,47 @@
       const checkbox = document.getElementById('terms-consent-checkbox');
       const primaryLink = document.getElementById('open-app-link');
       const manualLink = document.getElementById('manual-open-link');
+      const scrollLockNote = document.getElementById('scroll-lock-note');
+      let hasUnlockedConsent = false;
+
+      function updateActions() {
+        const accepted = hasUnlockedConsent && checkbox.checked;
+        primaryLink.classList.toggle('is-disabled', !accepted);
+        primaryLink.setAttribute('aria-disabled', accepted ? 'false' : 'true');
+        manualLink.classList.toggle('is-disabled', !accepted);
+        manualLink.setAttribute('aria-disabled', accepted ? 'false' : 'true');
+      }
+
+      function unlockConsentIfScrolledToBottom() {
+        if (hasUnlockedConsent) return;
+
+        const scrollBottom = window.scrollY + window.innerHeight;
+        const documentBottom = document.documentElement.scrollHeight;
+        const isAtBottom = scrollBottom >= documentBottom - 24;
+
+        if (!isAtBottom) return;
+
+        hasUnlockedConsent = true;
+        checkbox.disabled = false;
+        if (scrollLockNote) {
+          scrollLockNote.textContent = prefersPortuguese
+            ? 'Agora voce pode marcar a caixa e voltar ao app.'
+            : 'You can now check the box and return to the app.';
+        }
+        updateActions();
+      }
 
       if (checkbox && primaryLink && manualLink) {
+        updateActions();
+        unlockConsentIfScrolledToBottom();
+        window.addEventListener('scroll', unlockConsentIfScrolledToBottom, { passive: true });
+
         checkbox.addEventListener('change', function () {
-          const accepted = checkbox.checked;
-          primaryLink.classList.toggle('is-disabled', !accepted);
-          primaryLink.setAttribute('aria-disabled', accepted ? 'false' : 'true');
-          manualLink.classList.toggle('is-disabled', !accepted);
-          manualLink.setAttribute('aria-disabled', accepted ? 'false' : 'true');
+          updateActions();
         });
 
         primaryLink.addEventListener('click', function (event) {
-          if (!checkbox.checked) {
+          if (!hasUnlockedConsent || !checkbox.checked) {
             event.preventDefault();
             return;
           }
@@ -600,7 +635,7 @@
         });
 
         manualLink.addEventListener('click', function (event) {
-          if (!checkbox.checked) {
+          if (!hasUnlockedConsent || !checkbox.checked) {
             event.preventDefault();
             return;
           }
