@@ -13,6 +13,12 @@
   const defaultLocale = 'en';
   const localeStorageKey = 'vivapantry.locale';
   const localizedPages = new Set(['', 'privacy', 'terms', 'support', 'delete-account']);
+  const pageAliases = {
+    account: 'delete-account',
+    'account-deletion': 'delete-account',
+    'data-deletion': 'delete-account',
+    deletion: 'delete-account',
+  };
   const unsupportedLocalePattern = /^[a-z]{2}(?:-[A-Z]{2})?$/;
 
   function normalizeLocale(value) {
@@ -56,7 +62,8 @@
         ? segments.slice(1)
         : segments;
     const page = pageSegments.join('/').replace(/\.html$/, '');
-    return localizedPages.has(page) ? page : null;
+    const normalizedPage = pageAliases[page.toLowerCase()] || page;
+    return localizedPages.has(normalizedPage) ? normalizedPage : null;
   }
 
   function detectLocale() {
