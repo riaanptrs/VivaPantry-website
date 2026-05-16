@@ -179,7 +179,7 @@
     }), [
       createElement('img', {
         className: 'site-logo',
-        src: '/assets/images/vivapantry-logo.svg',
+        src: '/assets/Mainicon.png',
         alt: 'VivaPantry logo',
         decoding: 'async',
       }),
@@ -244,7 +244,7 @@
     const copy = append(createElement('div', { className: 'footer-brand' }), [
       createElement('img', {
         className: 'site-logo',
-        src: '/assets/images/vivapantry-logo.svg',
+        src: '/assets/Mainicon.png',
         alt: 'VivaPantry logo',
         loading: 'lazy',
         decoding: 'async',
@@ -395,7 +395,7 @@
         ]),
         append(createElement('div', { className: 'page-brand-card' }), [
           createElement('img', {
-            src: '/assets/images/vivapantry-logo.svg',
+            src: '/assets/Mainicon.png',
             alt: 'VivaPantry logo',
             loading: 'lazy',
             decoding: 'async',
