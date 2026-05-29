@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.riaan.vivapantry",
+      "sha256_cert_fingerprints": [
+        "8D:3C:CD:CC:57:32:86:D7:11:18:D2:34:69:B7:D1:2A:46:9A:73:26:22:63:4B:B2:2A:FD:E3:F6:66:AE:A7:6C"
+      ]
+    }
+  }
+]
