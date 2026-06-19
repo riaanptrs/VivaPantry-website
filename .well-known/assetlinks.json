@@ -5,7 +5,8 @@
       "namespace": "android_app",
       "package_name": "com.riaan.vivapantry",
       "sha256_cert_fingerprints": [
-        "8D:3C:CD:CC:57:32:86:D7:11:18:D2:34:69:B7:D1:2A:46:9A:73:26:22:63:4B:B2:2A:FD:E3:F6:66:AE:A7:6C"
+        "8D:3C:CD:CC:57:32:86:D7:11:18:D2:34:69:B7:D1:2A:46:9A:73:26:22:63:4B:B2:2A:FD:E3:F6:66:AE:A7:6C",
+        "37:1A:35:57:26:E1:49:D0:3E:9D:DC:5C:2C:B2:FB:1A:6B:A6:66:04:3D:E6:53:A7:71:D7:3A:9F:50:DE:7A:EE"
       ]
     }
   }
