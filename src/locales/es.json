@@ -19,6 +19,10 @@
     "es": "Español"
   },
   "meta": {
+    "404": {
+      "title": "Página no encontrada | VivaPantry",
+      "description": "No se pudo encontrar la página solicitada de VivaPantry."
+    },
     "home": {
       "title": "VivaPantry | Planifica comidas, compra mejor y desperdicia menos.",
       "description": "VivaPantry conecta tu despensa, recetas, recibos, precios y planes de comida para que tu hogar sepa qué cocinar y qué comprar."
@@ -37,15 +41,11 @@
     },
     "pricing": {
       "title": "Precios | VivaPantry",
-      "description": "Opciones de precios de VivaPantry para uso inicial gratuito y funciones premium de planificación del hogar."
+      "description": "Información de precios de VivaPantry para acceso inicial y funciones premium de planificación del hogar, con términos finales de suscripción confirmados en la tienda de apps."
     },
     "delete-account": {
       "title": "Eliminar cuenta | VivaPantry",
       "description": "Cómo solicitar la eliminación de tu cuenta VivaPantry y los datos de la app."
-    },
-    "404": {
-      "title": "Página no encontrada | VivaPantry",
-      "description": "No se pudo encontrar la página solicitada de VivaPantry."
     }
   },
   "home": {
@@ -77,7 +77,7 @@
       }
     },
     "primaryActions": "Acciones principales",
-    "primaryCta": "Preguntar por acceso Android",
+    "primaryCta": "Preguntar por acceso a la app",
     "secondaryCta": "Ver política de privacidad",
     "trustNote": "Sin consejos médicos. Sin promesas de dieta. Apoyo práctico para la planificación del hogar.",
     "previewAria": "Vista previa de la app VivaPantry",
@@ -143,13 +143,13 @@
       },
       "householdPreferences": {
         "title": "Preferencias del hogar",
-        "text": "Planifica según tamaño del hogar, tiempo de cocina, notas dietarias, región y necesidades de la semana."
+        "text": "Planifica según tamaño del hogar, tiempo de cocina, preferencias alimentarias, región y necesidades de la semana."
       }
     },
-    "readinessEyebrow": "Preparado para lanzamiento Android",
+    "readinessEyebrow": "Acceso desde la app móvil",
     "readinessTitle": "Creado para planificación semanal, compras reales y hogares reales.",
-    "readinessText": "VivaPantry está alineado con el lanzamiento de la app Android: paquete com.riaan.vivapantry, versión 1.0.1, build 31. iOS sigue planificado por separado.",
-    "readinessCta": "Build Android listo",
+    "readinessText": "Usa la app móvil para la experiencia completa de VivaPantry. El acceso web y la disponibilidad para iOS se están preparando por separado.",
+    "readinessCta": "Preguntar por acceso a la app",
     "readinessSecondary": "Leer la política de privacidad",
     "readiness": {
       "weeklyPlanning": "Diseñado para planificación de comidas con contexto de despensa",
@@ -158,44 +158,44 @@
       "householdPreferences": "Las preferencias del hogar guían sugerencias más inteligentes"
     },
     "trustEyebrow": "Confianza y cumplimiento",
-    "trustTitle": "Políticas claras para el lanzamiento Android.",
-    "trustText": "Revisa cómo VivaPantry maneja privacidad, términos, soporte y eliminación de cuenta."
+    "trustTitle": "Políticas claras antes de empezar a planificar.",
+    "trustText": "Revisa cómo VivaPantry maneja privacidad, términos, soporte, suscripciones, sugerencias con IA y eliminación de cuenta."
   },
   "webAccess": {
     "navLabel": "Acceso web de VivaPantry",
-    "openWeb": "Abrir VivaPantry Web",
-    "signIn": "Iniciar sesión",
-    "createAccount": "Crear cuenta"
+    "openWeb": "Estado del acceso web",
+    "signIn": "Acceso a la cuenta",
+    "createAccount": "Configuración de cuenta"
   },
   "privacy": {
     "eyebrow": "Política de Privacidad",
     "title": "Tus datos deben apoyar tu cocina, no sorprenderte.",
     "lead": "Esta política explica qué recopila VivaPantry, por qué lo usamos y cómo contactarnos sobre privacidad o eliminación de datos.",
-    "sections": "Información que recopilamos||VivaPantry puede recopilar y procesar información que proporcionas o generas al usar la app, incluyendo:||Información de cuenta, como correo electrónico y detalles de autenticación.|Preferencias del hogar, notas dietarias, configuración regional, objetivos de cocina, tamaño del hogar, preferencias de presupuesto y preferencias de planificación.|Artículos de despensa, productos, cantidades, listas de compras, recetas, ingredientes, instrucciones, planes de comida y registros de cocina.|Recibos, imágenes de recibos, imágenes de recetas, artículos extraídos, historial de precios y registros de compras relacionados.|Datos de ubicación y tiendas, como ciudad del perfil, ubicación aproximada opcional del dispositivo, enlaces de Google Maps pegados por ti, tiendas seleccionadas, direcciones, Google Place IDs y registros de búsqueda de Maps/Places.|Datos de facturación y beneficios, como estado del plan, IDs de producto, metadatos de verificación de compra y estado de suscripción.|Registros de uso, diagnósticos, analíticas de la app, registros de errores, metadatos de solicitudes de IA, metadatos de solicitudes Google Maps/Places y registros de soporte usados para operar y mejorar el servicio.|||Cómo usamos la información||Usamos datos de la app para ofrecer funciones principales: control de despensa, escaneo de recibos, listas de compras, organización de recetas, planificación con IA, búsqueda de tiendas, soporte, seguridad, depuración, verificación de suscripciones y mejora del servicio.|||Proveedores de servicio||VivaPantry usa Supabase para servicios backend como autenticación, base de datos, almacenamiento y funciones serverless. Podemos usar proveedores de IA como OpenAI para procesar solicitudes de planificación, recibos, recetas, compras o extracción. Podemos usar servicios de Google para búsqueda de tiendas Maps/Places, almacenamiento opcional en Google Drive y verificación de Google Play Billing. También podemos usar herramientas de analíticas y registro de errores para entender la confiabilidad y diagnosticar problemas.|||Procesamiento con IA||Cuando usas funciones con IA, contexto relevante de despensa, recetas, preferencias, recibos, compras o planificación puede enviarse a proveedores de IA para generar resultados. Buscamos enviar solo la información necesaria para la función solicitada. Las salidas de IA pueden estar incompletas o ser incorrectas, así que revisa alergias, nutrición, precios, disponibilidad de productos y seguridad al cocinar antes de confiar en ellas.|||Datos de APIs de Google||Cuando usas funciones de Google Maps/Places, datos relevantes de la solicitud pueden enviarse a Google, incluyendo texto de búsqueda, enlaces de Maps pegados, identificadores de lugares, detalles de tiendas seleccionadas y coordenadas aproximadas para búsqueda cercana. Cuando conectas Google Drive, VivaPantry usa datos de Drive solo para el flujo de almacenamiento que habilitas. Cuando compras mediante Google Play, datos de compra y beneficios se usan para verificar acceso a funciones pagas. No vendemos datos de APIs de Google ni los usamos para publicidad, intermediación de datos, decisiones de crédito o perfiles no relacionados.|||Retención y eliminación de datos||Conservamos información según sea necesario para proporcionar la app, cumplir obligaciones legales, resolver problemas, prevenir abuso y mantener la seguridad. Puedes solicitar la eliminación de cuenta y datos contactándonos. La eliminación puede incluir datos de cuenta, artículos de despensa, recetas, listas de compras, recibos, preferencias, datos del hogar, registros de almacenamiento conectado y datos relacionados de la app. Algunos registros limitados pueden conservarse cuando sea necesario por seguridad, razones legales, prevención de fraude, facturación u operación.|||Contacto||Para preguntas de privacidad o solicitudes de eliminación, escribe a <a href=\"mailto:support@vivapantry.com\">support@vivapantry.com</a>."
+    "sections": "Información que recopilamos||VivaPantry puede recopilar y procesar información que proporcionas o generas al usar la app, incluyendo:||Información de cuenta, como correo electrónico y detalles de autenticación.|Preferencias del hogar, preferencias alimentarias, configuración regional, objetivos de cocina, tamaño del hogar, preferencias de presupuesto y preferencias de planificación.|Artículos de despensa, productos, cantidades, listas de compras, recetas, ingredientes, instrucciones, planes de comida y registros de cocina.|Recibos, imágenes de recibos, imágenes de recetas, artículos extraídos, historial de precios y registros de compras relacionados.|Datos de ubicación y tiendas, como ciudad del perfil, ubicación aproximada opcional del dispositivo, enlaces de Google Maps pegados por ti, tiendas seleccionadas, direcciones, Google Place IDs y registros de búsqueda de Maps/Places.|Datos de facturación y beneficios, como estado del plan, IDs de producto, metadatos de verificación de compra y estado de suscripción.|Registros de uso, diagnósticos, analíticas de la app, registros de errores, metadatos de solicitudes de IA, metadatos de solicitudes Google Maps/Places y registros de soporte usados para operar y mejorar el servicio.|||Cómo usamos la información||Usamos datos de la app para ofrecer funciones principales: control de despensa, escaneo de recibos, listas de compras, organización de recetas, planificación con IA, búsqueda de tiendas, soporte, seguridad, depuración, verificación de suscripciones y mejora del servicio.|||Proveedores de servicio||VivaPantry usa Supabase para servicios backend como autenticación, base de datos, almacenamiento y funciones serverless. Podemos usar proveedores de IA como OpenAI para procesar solicitudes de planificación, recibos, recetas, compras o extracción. Podemos usar servicios de Google para búsqueda de tiendas Maps/Places, almacenamiento opcional en Google Drive y verificación de Google Play Billing. También podemos usar herramientas de analíticas y registro de errores para entender la confiabilidad y diagnosticar problemas.|||Procesamiento con IA||Cuando usas funciones con IA, contexto relevante de despensa, recetas, preferencias, recibos, compras o planificación puede enviarse a proveedores de IA para generar resultados. Buscamos enviar solo la información necesaria para la función solicitada. Las salidas de IA pueden estar incompletas o ser incorrectas, así que revisa alergias, nutrición, precios, disponibilidad de productos y seguridad al cocinar antes de confiar en ellas.|||Datos de APIs de Google||Cuando usas funciones de Google Maps/Places, datos relevantes de la solicitud pueden enviarse a Google, incluyendo texto de búsqueda, enlaces de Maps pegados, identificadores de lugares, detalles de tiendas seleccionadas y coordenadas aproximadas para búsqueda cercana. Cuando conectas Google Drive, VivaPantry usa datos de Drive solo para el flujo de almacenamiento que habilitas. Cuando compras mediante Google Play, datos de compra y beneficios se usan para verificar acceso a funciones pagas. No vendemos datos de APIs de Google ni los usamos para publicidad, intermediación de datos, decisiones de crédito o perfiles no relacionados.|||Retención y eliminación de datos||Conservamos información según sea necesario para proporcionar la app, cumplir obligaciones legales, resolver problemas, prevenir abuso y mantener la seguridad. Puedes solicitar la eliminación de cuenta y datos contactándonos. La eliminación puede incluir datos de cuenta, artículos de despensa, recetas, listas de compras, recibos, preferencias, datos del hogar, registros de almacenamiento conectado y datos relacionados de la app. Algunos registros limitados pueden conservarse cuando sea necesario por seguridad, razones legales, prevención de fraude, facturación u operación.|||Contacto||Para preguntas de privacidad o solicitudes de eliminación, escribe a <a href=\"mailto:support@vivapantry.com\">support@vivapantry.com</a>."
   },
   "pricing": {
     "eyebrow": "Precios",
     "title": "Empieza con planificación práctica. Mejora cuando tu hogar necesite más.",
-    "lead": "VivaPantry ofrece una experiencia inicial gratuita y funciones premium por suscripción para hogares que quieren más planificación con IA, escaneos y coordinación semanal.",
+    "lead": "VivaPantry ofrece herramientas iniciales de planificación y funciones premium por suscripción para hogares que quieren más planificación asistida por IA, escaneos y coordinación semanal.",
     "cardsLabel": "Opciones de precios de VivaPantry",
     "freeEyebrow": "Gratis",
     "freeTitle": "Inicio gratuito",
-    "freePrice": "Empieza gratis",
+    "freePrice": "Acceso inicial",
     "freeItems": [
       "Organiza flujos básicos de despensa, recetas y listas de compras.",
-      "Prueba el ciclo de planificación semanal antes de comprometerte con una suscripción.",
+      "Prueba el ciclo de planificación semanal antes de decidir si las funciones premium son útiles para tu hogar.",
       "Usa soporte y recursos de eliminación de cuenta desde el sitio público."
     ],
     "premiumEyebrow": "Premium",
     "premiumTitle": "Suscripción premium",
     "premiumPrice": "Funciones premium disponibles mediante suscripción",
     "premiumItems": [
-      "Planificación de comidas con IA basada en despensa, recetas, preferencias y objetivos semanales.",
+      "Planificación de comidas asistida por IA basada en despensa, recetas, preferencias y objetivos semanales.",
       "Flujos de escaneo de recibos y despensa donde estén disponibles en la app.",
-      "Planificación sensible al clima como parte de sugerencias semanales inteligentes.",
+      "Contexto del clima en sugerencias semanales donde esté disponible.",
       "Soporte para planificación del hogar y la familia con preferencias y rutinas compartidas."
     ],
-    "note": "Los precios finales de tienda, términos de prueba y textos regionales de facturación deben confirmarse antes de publicar importes de planes pagos."
+    "note": "Las funciones premium están disponibles mediante suscripción. Los precios finales, pruebas, términos de facturación, disponibilidad de funciones y disponibilidad regional pueden variar según la región y la tienda de apps."
   },
   "terms": {
     "eyebrow": "Términos de Uso",
@@ -222,7 +222,7 @@
     "cta": "Ir al inicio"
   },
   "footer": {
-    "tagline": "Planifica comidas, controla compras, reduce desperdicio y ahorra dinero con planificación práctica del hogar.",
+    "tagline": "Planifica comidas, controla compras, reduce desperdicio y compra con más contexto mediante planificación práctica del hogar.",
     "contact": "Contacto:",
     "navigation": "Navegación del pie de página",
     "privacy": "Política de Privacidad",

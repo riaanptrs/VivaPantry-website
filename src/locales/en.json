@@ -19,6 +19,10 @@
     "es": "Español"
   },
   "meta": {
+    "404": {
+      "title": "Page not found | VivaPantry",
+      "description": "The requested VivaPantry page could not be found."
+    },
     "home": {
       "title": "VivaPantry | Plan meals, shop smarter, waste less.",
       "description": "VivaPantry connects your pantry, recipes, receipts, prices, and meal plans so your household knows what to cook and what to buy."
@@ -37,15 +41,11 @@
     },
     "pricing": {
       "title": "Pricing | VivaPantry",
-      "description": "VivaPantry pricing options for free starter use and premium household meal planning features."
+      "description": "VivaPantry pricing information for starter access and premium household meal planning features, with final subscription terms confirmed in the app store."
     },
     "delete-account": {
       "title": "Delete Account | VivaPantry",
       "description": "How to request deletion of your VivaPantry account and app data."
-    },
-    "404": {
-      "title": "Page not found | VivaPantry",
-      "description": "The requested VivaPantry page could not be found."
     }
   },
   "home": {
@@ -77,7 +77,7 @@
       }
     },
     "primaryActions": "Primary actions",
-    "primaryCta": "Ask about Android access",
+    "primaryCta": "Ask about mobile app access",
     "secondaryCta": "View privacy policy",
     "trustNote": "No medical advice. No diet promises. Practical household planning support.",
     "previewAria": "VivaPantry app preview",
@@ -146,10 +146,10 @@
         "text": "Plan around household size, cooking time, dietary notes, regional settings, and practical weeknight needs."
       }
     },
-    "readinessEyebrow": "Android release readiness",
+    "readinessEyebrow": "Mobile app access",
     "readinessTitle": "Built for weekly planning, real groceries, and real households.",
-    "readinessText": "VivaPantry is aligned with the Android app release: package com.riaan.vivapantry, version 1.0.1, build 31. iOS remains planned separately.",
-    "readinessCta": "Android release build ready",
+    "readinessText": "Use the mobile app for the full VivaPantry experience. Web access and iOS availability are being prepared separately.",
+    "readinessCta": "Ask about app access",
     "readinessSecondary": "Read the privacy policy",
     "readiness": {
       "weeklyPlanning": "Designed for pantry-aware meal planning",
@@ -158,14 +158,14 @@
       "householdPreferences": "Household preferences guide smarter suggestions"
     },
     "trustEyebrow": "Trust and compliance",
-    "trustTitle": "Clear policies for Android release.",
-    "trustText": "Review how VivaPantry handles privacy, terms, support, and account deletion."
+    "trustTitle": "Clear policies before you start planning.",
+    "trustText": "Review how VivaPantry handles privacy, terms, support, subscriptions, AI suggestions, and account deletion."
   },
   "webAccess": {
     "navLabel": "VivaPantry web access",
-    "openWeb": "Open VivaPantry Web",
-    "signIn": "Sign in",
-    "createAccount": "Create account"
+    "openWeb": "Web access status",
+    "signIn": "Account access",
+    "createAccount": "Account setup"
   },
   "privacy": {
     "eyebrow": "Privacy Policy",
@@ -176,26 +176,26 @@
   "pricing": {
     "eyebrow": "Pricing",
     "title": "Start with practical planning. Upgrade when your household needs more.",
-    "lead": "VivaPantry supports a free starter experience and premium subscription features for households that want deeper AI planning, scanning, and weekly coordination.",
+    "lead": "VivaPantry supports starter planning tools and premium subscription features for households that want deeper AI-assisted planning, scanning, and weekly coordination.",
     "cardsLabel": "VivaPantry pricing options",
     "freeEyebrow": "Free",
     "freeTitle": "Free starter",
-    "freePrice": "Start for free",
+    "freePrice": "Starter access",
     "freeItems": [
       "Organize basic pantry, recipe, and shopping list workflows.",
-      "Try the weekly planning loop before committing to a subscription.",
+      "Try the weekly planning loop before deciding whether premium features are useful for your household.",
       "Use support and account deletion resources from the public website."
     ],
     "premiumEyebrow": "Premium",
     "premiumTitle": "Premium subscription",
-    "premiumPrice": "Premium features available through subscription",
+    "premiumPrice": "Premium features are available through subscription",
     "premiumItems": [
-      "AI meal planning from pantry, recipes, preferences, and weekly goals.",
+      "AI-assisted meal planning from pantry, recipes, preferences, and weekly goals.",
       "Receipt and pantry scanning workflows where available in the app.",
-      "Weather-aware meal planning as part of smart weekly suggestions.",
+      "Weather context in weekly suggestions where supported.",
       "Household and family planning support for shared preferences and routines."
     ],
-    "note": "Final store pricing, trial terms, and regional billing copy must be confirmed before publishing paid plan amounts."
+    "note": "Premium features are available through subscription. Final prices, trials, billing terms, feature availability, and regional availability may vary by region and app store."
   },
   "terms": {
     "eyebrow": "Terms of Use",
@@ -222,7 +222,7 @@
     "cta": "Go home"
   },
   "footer": {
-    "tagline": "Plan meals, track groceries, reduce waste, and save money with practical household planning.",
+    "tagline": "Plan meals, track groceries, reduce waste, and shop with more context through practical household planning.",
     "contact": "Contact:",
     "navigation": "Footer navigation",
     "privacy": "Privacy Policy",
