@@ -1,0 +1,14 @@
+:root {
+  --vivapantry-green: #4caf50;
+  --vivapantry-green-dark: #14532d;
+  --vivapantry-green-soft: #eaf7ea;
+  --vivapantry-ink: #172016;
+  --vivapantry-muted: #5f6f63;
+  --vivapantry-line: #dfe8df;
+  --vivapantry-paper: #fffef9;
+  --vivapantry-white: #ffffff;
+  --vivapantry-radius-sm: 10px;
+  --vivapantry-radius-md: 14px;
+  --vivapantry-radius-lg: 24px;
+  --vivapantry-shadow-soft: 0 24px 80px rgba(20, 83, 45, 0.14);
+}

@@ -1,0 +1,22 @@
+User-agent: *
+Allow: /
+Disallow: /callback
+Disallow: /callback.html
+Disallow: /google-drive-auth.html
+Disallow: /app/
+Disallow: /sign-in/
+Disallow: /create-account/
+Disallow: /household-invite
+Disallow: /dev/
+Disallow: /(auth)/
+Disallow: /(tabs)/
+Disallow: /auth/
+Disallow: /onboarding
+Disallow: /pantry
+Disallow: /grocery
+Disallow: /recipes/
+Disallow: /meal-plan
+Disallow: /settings
+Disallow: /shop
+
+Sitemap: https://vivapantry.com/sitemap.xml
