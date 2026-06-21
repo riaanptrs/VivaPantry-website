@@ -538,25 +538,25 @@ function writeUtilityPages() {
   const accessPages = [
     {
       path: 'app/index.html',
-      title: 'Open VivaPantry Web',
-      heading: 'VivaPantry Web access',
-      text: 'The authenticated VivaPantry Web app is being prepared for a dedicated deployment. For now, use the Android app or contact support for access help.',
-      primaryLabel: 'Sign in',
-      primaryHref: webAccessRoutes.signIn,
+      title: 'VivaPantry web access',
+      heading: 'Web access is being prepared',
+      text: 'This page is reserved for VivaPantry web access. Use the mobile app for the full experience while account access pages are being prepared.',
+      primaryLabel: 'Contact support',
+      primaryHref: `mailto:${supportEmail}?subject=VivaPantry%20web%20access`,
     },
     {
       path: 'sign-in/index.html',
-      title: 'Sign in | VivaPantry',
-      heading: 'Sign in to VivaPantry',
-      text: 'Web sign-in is not yet hosted on this static public site. The mobile app remains the production sign-in surface while dedicated web hosting is prepared.',
+      title: 'Account access | VivaPantry',
+      heading: 'Account access is being prepared',
+      text: 'Web sign-in is not hosted on this public site yet. Use the mobile app for the full experience, or contact support if you need help with your account.',
       primaryLabel: 'Contact support',
       primaryHref: `mailto:${supportEmail}?subject=VivaPantry%20web%20sign-in`,
     },
     {
       path: 'create-account/index.html',
-      title: 'Create account | VivaPantry',
-      heading: 'Create a VivaPantry account',
-      text: 'Account creation currently happens in the VivaPantry app. Dedicated web account creation should move to the future hosted web app.',
+      title: 'Account setup | VivaPantry',
+      heading: 'Account setup is being prepared',
+      text: 'This page is reserved for VivaPantry account setup. Account creation currently happens in the mobile app while dedicated web access is being prepared.',
       primaryLabel: 'Contact support',
       primaryHref: `mailto:${supportEmail}?subject=VivaPantry%20account%20access`,
     },
@@ -687,6 +687,8 @@ function writeAssets() {
   --green: #4caf50;
   --green-dark: #14532d;
   --green-soft: #eaf7ea;
+  --mint: #f0faf3;
+  --sun: #fff4c7;
   --ink: #172016;
   --muted: #5f6f63;
   --line: #dfe8df;
@@ -701,7 +703,7 @@ a { color: var(--green-dark); }
 img { max-width: 100%; height: auto; }
 .skip-link { position: absolute; left: -999px; top: 12px; background: var(--white); padding: 10px 14px; border-radius: 8px; z-index: 10; }
 .skip-link:focus { left: 12px; }
-.site-header { display: flex; align-items: center; gap: 20px; justify-content: space-between; width: 100%; max-width: 100%; padding: 18px clamp(18px, 5vw, 64px); border-bottom: 1px solid var(--line); background: rgba(255, 254, 249, 0.94); position: sticky; top: 0; z-index: 5; backdrop-filter: blur(12px); }
+.site-header { display: flex; align-items: center; gap: 20px; justify-content: space-between; width: 100%; max-width: 100%; padding: 16px clamp(18px, 5vw, 64px); border-bottom: 1px solid var(--line); background: rgba(255, 254, 249, 0.94); position: sticky; top: 0; z-index: 5; backdrop-filter: blur(12px); }
 .brand { display: inline-flex; align-items: center; gap: 10px; font-weight: 800; text-decoration: none; color: var(--ink); }
 .brand img { border-radius: 12px; }
 .nav, .app-cta-nav, .language-nav, .site-footer nav { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; min-width: 0; max-width: 100%; }
@@ -710,10 +712,17 @@ img { max-width: 100%; height: auto; }
 .app-cta.primary { border-color: var(--green); background: var(--green); color: var(--white); }
 .language-nav { padding-left: 12px; border-left: 1px solid var(--line); }
 main { overflow: hidden; }
-.hero, .split-section, .content-section, .page-hero, .legal-content { width: min(1120px, calc(100% - 36px)); margin-inline: auto; }
-.hero { min-height: 74vh; display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(280px, 0.95fr); gap: clamp(28px, 6vw, 72px); align-items: center; padding: clamp(48px, 8vw, 96px) 0 42px; }
-.hero-visual { display: grid; justify-items: center; }
-.hero-image { width: min(100%, 360px); max-height: 74vh; object-fit: contain; border-radius: 28px; box-shadow: 0 24px 80px rgba(20, 83, 45, 0.14); }
+.hero, .split-section, .content-section, .page-hero, .legal-content, .screenshot-section { width: min(1160px, calc(100% - 36px)); margin-inline: auto; }
+.hero { min-height: 78vh; display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(360px, 1.1fr); gap: clamp(28px, 6vw, 72px); align-items: center; padding: clamp(48px, 8vw, 96px) 0 42px; }
+.product-hero { position: relative; }
+.product-hero::before, .product-hero::after { content: ""; position: absolute; z-index: -1; border-radius: 999px; }
+.product-hero::before { width: 420px; height: 420px; right: -140px; top: 46px; background: var(--mint); }
+.product-hero::after { width: 360px; height: 360px; left: -180px; bottom: -90px; background: var(--sun); }
+.hero-showcase { position: relative; min-height: 620px; display: grid; place-items: center; }
+.hero-showcase::before { content: ""; position: absolute; inset: 44px 36px 24px 56px; border-radius: 34px; background: linear-gradient(135deg, #e9f8ed, #fffdf5); border: 1px solid #d7ead8; box-shadow: 0 28px 90px rgba(20, 83, 45, 0.12); }
+.hero-phone { position: absolute; object-fit: contain; filter: drop-shadow(0 28px 44px rgba(20, 32, 22, 0.18)); }
+.primary-phone { left: 0; bottom: 20px; width: min(42%, 260px); max-height: 580px; border-radius: 24px; }
+.secondary-phone { right: 0; top: 0; width: min(68%, 420px); max-height: 660px; }
 .eyebrow { margin: 0 0 12px; color: var(--green-dark); font-weight: 850; text-transform: uppercase; letter-spacing: 0; font-size: 13px; }
 h1, h2, h3 { letter-spacing: 0; line-height: 1.08; margin: 0; }
 h1 { font-size: clamp(42px, 6vw, 76px); max-width: 900px; }
@@ -729,13 +738,22 @@ p, li { color: var(--muted); line-height: 1.65; font-size: 17px; }
 .flow-strip { width: min(920px, calc(100% - 36px)); margin: 0 auto 44px; display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
 .flow-strip span { display: inline-flex; align-items: center; gap: 8px; border: 1px solid var(--line); border-radius: 999px; padding: 8px 14px; background: var(--white); color: var(--muted); font-weight: 700; }
 .flow-strip strong { display: grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; background: var(--green-soft); color: var(--green-dark); }
+.proof-strip { width: min(1120px, calc(100% - 36px)); margin: 0 auto 28px; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+.proof-strip article { min-height: 104px; padding: 18px; border-radius: 14px; border: 1px solid var(--line); background: var(--white); box-shadow: 0 12px 40px rgba(20, 83, 45, 0.06); }
+.proof-strip strong { display: block; color: var(--green-dark); font-size: 22px; line-height: 1.1; }
+.proof-strip span { display: block; margin-top: 8px; color: var(--muted); font-weight: 750; }
 .split-section { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(24px, 5vw, 64px); align-items: center; padding: 72px 0; }
 .split-section img { width: 100%; border-radius: 20px; border: 1px solid var(--line); background: var(--white); }
+.screenshot-section { display: grid; grid-template-columns: minmax(260px, 0.7fr) minmax(360px, 1.3fr); gap: clamp(24px, 5vw, 64px); align-items: center; padding: 78px clamp(20px, 4vw, 44px); margin-top: 28px; border-radius: 26px; border: 1px solid #d7ead8; background: linear-gradient(135deg, #f0faf3 0%, #fffef9 58%, #fff6d6 100%); }
+.screenshot-copy h2 { font-size: clamp(28px, 3.8vw, 46px); }
+.wide-screenshot { width: min(100%, 760px); max-height: 920px; justify-self: center; object-fit: contain; border-radius: 30px; filter: drop-shadow(0 30px 50px rgba(20, 32, 22, 0.16)); }
 .content-section { padding: 72px 0; }
 .feature-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin-top: 28px; }
-.feature-card { background: var(--white); border: 1px solid var(--line); border-radius: 14px; padding: 22px; }
+.feature-card { background: var(--white); border: 1px solid var(--line); border-radius: 14px; padding: 22px; box-shadow: 0 12px 40px rgba(20, 83, 45, 0.05); }
 .feature-card img { margin-bottom: 18px; }
 .app-preview img { width: min(100%, 360px); max-height: 620px; object-fit: contain; justify-self: center; }
+.readiness-list { margin: 20px 0 0; padding-left: 22px; }
+.readiness-list li { margin: 8px 0; font-weight: 650; }
 .trust-section { border-top: 1px solid var(--line); }
 .page-hero { padding: 72px 0 28px; }
 .page-hero h1 { font-size: clamp(38px, 5vw, 64px); }
@@ -756,8 +774,12 @@ p, li { color: var(--muted); line-height: 1.65; font-size: 17px; }
   .site-header { align-items: flex-start; flex-direction: column; }
   .brand, .nav, .app-cta-nav, .language-nav { width: 100%; }
   .language-nav { border-left: 0; padding-left: 0; }
-  .hero, .split-section { grid-template-columns: 1fr; }
+  .hero, .split-section, .screenshot-section { grid-template-columns: 1fr; }
   .hero { min-height: auto; padding-top: 36px; }
+  .hero-showcase { min-height: 540px; }
+  .primary-phone { width: 42%; left: 2%; }
+  .secondary-phone { width: 72%; right: -2%; }
+  .proof-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .feature-grid, .pricing-grid { grid-template-columns: 1fr; }
 }
 @media (max-width: 560px) {
@@ -767,6 +789,14 @@ p, li { color: var(--muted); line-height: 1.65; font-size: 17px; }
   .button { min-height: 44px; padding: 0 18px; }
   .nav, .app-cta-nav, .language-nav { gap: 9px; }
   .app-cta { min-height: 34px; padding: 0 10px; }
+  h1 { font-size: clamp(34px, 9vw, 40px); line-height: 1.12; }
+  .lead { font-size: 17px; }
+  .hero-showcase { min-height: 440px; }
+  .hero-showcase::before { inset: 30px 0 24px; }
+  .primary-phone { width: 46%; bottom: 8px; }
+  .secondary-phone { width: 76%; top: 8px; }
+  .proof-strip { grid-template-columns: 1fr; }
+  .screenshot-section { width: min(100% - 24px, 1160px); padding: 34px 16px; }
 }
 `);
 
