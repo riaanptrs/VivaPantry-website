@@ -1,26 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>VivaPantry Google Drive Callback</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Connecting Google Drive | VivaPantry</title>
+  <meta name="description" content="VivaPantry Google Drive connection callback.">
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="canonical" href="https://vivapantry.com/google-drive-auth.html">
+  <link rel="icon" type="image/png" href="/assets/Mainicon.png">
 </head>
-<body style="font-family: Arial, Helvetica, sans-serif; padding: 24px;">
-  <p>Returning to VivaPantry...</p>
-  <script>
-    (function () {
-      const query = window.location.search || '';
-      const hash = window.location.hash || '';
-      const payload = `${query}${hash}`;
-      const nextUrl = `vivapantry://google-drive-auth${payload}`;
-      const legacyUrl = `pantrypal://google-drive-auth${payload}`;
-
-      window.location.replace(nextUrl);
-
-      setTimeout(function () {
-        window.location.replace(legacyUrl);
-      }, 500);
-    })();
-  </script>
+<body>
+  <main class="utility-page">
+    <img src="/assets/Mainicon.png" width="48" height="48" alt="">
+    <h1>Connecting Google Drive</h1>
+    <p>You can return to the VivaPantry app to finish this connection.</p>
+  </main>
 </body>
 </html>
