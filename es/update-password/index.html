@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Actualizar contraseña | VivaPantry</title>
+  <meta name="description" content="Define una nueva contraseña de VivaPantry desde un correo de restablecimiento.">
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="canonical" href="https://vivapantry.com/es/update-password/">
+  <link rel="icon" type="image/png" href="/assets/Mainicon.png">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <main class="utility-page web-access-page">
+    <img src="/assets/Mainicon.png" width="48" height="48" alt="">
+    <p class="eyebrow">VivaPantry Web</p>
+    <h1>Define una nueva contraseña</h1>
+    <p>Abre esta página desde el enlace del correo de restablecimiento y elige una nueva contraseña para tu cuenta VivaPantry.</p>
+    <form class="account-form" id="update-password-form" data-config-error="La actualización de contraseña aún no está configurada para el sitio público." data-token-error="Abre el enlace de restablecimiento desde tu correo antes de definir una contraseña." data-session-ready-message="Ingresa una nueva contraseña para terminar el restablecimiento." data-updating-message="Actualizando contraseña..." data-success-message="Tu contraseña se actualizó. Puedes volver al acceso de cuenta de VivaPantry." data-failure-message="No se pudo actualizar la contraseña.">
+      <label for="new-password">Nueva contraseña</label>
+      <input id="new-password" name="password" type="password" autocomplete="new-password" required minlength="8" placeholder="Al menos 8 caracteres">
+      <button class="button primary" type="submit">Actualizar contraseña</button>
+      <p class="form-status" id="update-password-status" role="status" aria-live="polite">Verificando el enlace de restablecimiento...</p>
+    </form>
+    <div class="hero-actions">
+      <a class="button secondary" href="/es/sign-in/">Volver al acceso de cuenta</a>
+    </div>
+    <nav class="utility-language-nav" aria-label="Idioma">
+      <a href="/update-password/" hreflang="en" lang="en">English</a>
+      <a href="/es/update-password/" hreflang="es" lang="es" aria-current="true">Español</a>
+      <a href="/pt-BR/update-password/" hreflang="pt-BR" lang="pt-BR">Português Brasil</a>
+    </nav>
+  </main>
+  <script src="/supabase-web-config.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.105.1/dist/umd/supabase.min.js" defer></script>
+  <script src="/password-update.js" defer></script>
+</body>
+</html>

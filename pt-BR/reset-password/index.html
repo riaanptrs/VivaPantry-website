@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Redefinir senha | VivaPantry</title>
+  <meta name="description" content="Solicite um email de redefinição de senha do VivaPantry.">
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="canonical" href="https://vivapantry.com/pt-BR/reset-password/">
+  <link rel="icon" type="image/png" href="/assets/Mainicon.png">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <main class="utility-page web-access-page">
+    <img src="/assets/Mainicon.png" width="48" height="48" alt="">
+    <p class="eyebrow">VivaPantry Web</p>
+    <h1>Redefina sua senha</h1>
+    <p>Digite o email da sua conta VivaPantry. Se a conta existir, o Supabase enviará um link de redefinição que volta para este site para atualizar a senha.</p>
+    <form class="account-form" id="reset-password-form" data-config-error="A redefinição de senha ainda não está configurada para o site público." data-sending-message="Enviando email de redefinição..." data-success-message="Se existir uma conta para esse email, um link de redefinição de senha foi enviado." data-failure-message="Não foi possível iniciar a redefinição de senha.">
+      <label for="reset-email">Email da conta</label>
+      <input id="reset-email" name="email" type="email" autocomplete="email" required placeholder="voce@example.com">
+      <button class="button primary" type="submit">Enviar email de redefinição</button>
+      <p class="form-status" id="reset-password-status" role="status" aria-live="polite">A redefinição de senha usa apenas o email da conta VivaPantry.</p>
+    </form>
+    <div class="hero-actions">
+      <a class="button secondary" href="/pt-BR/sign-in/">Voltar ao acesso da conta</a>
+    </div>
+    <nav class="utility-language-nav" aria-label="Idioma">
+      <a href="/reset-password/" hreflang="en" lang="en">English</a>
+      <a href="/es/reset-password/" hreflang="es" lang="es">Español</a>
+      <a href="/pt-BR/reset-password/" hreflang="pt-BR" lang="pt-BR" aria-current="true">Português Brasil</a>
+    </nav>
+  </main>
+  <script src="/supabase-web-config.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.105.1/dist/umd/supabase.min.js" defer></script>
+  <script src="/password-reset.js" defer></script>
+</body>
+</html>

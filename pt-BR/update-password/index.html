@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Atualizar senha | VivaPantry</title>
+  <meta name="description" content="Defina uma nova senha VivaPantry a partir de um email de redefinição.">
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="canonical" href="https://vivapantry.com/pt-BR/update-password/">
+  <link rel="icon" type="image/png" href="/assets/Mainicon.png">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <main class="utility-page web-access-page">
+    <img src="/assets/Mainicon.png" width="48" height="48" alt="">
+    <p class="eyebrow">VivaPantry Web</p>
+    <h1>Defina uma nova senha</h1>
+    <p>Abra esta página pelo link do email de redefinição e escolha uma nova senha para sua conta VivaPantry.</p>
+    <form class="account-form" id="update-password-form" data-config-error="A atualização de senha ainda não está configurada para o site público." data-token-error="Abra o link de redefinição no seu email antes de definir uma senha." data-session-ready-message="Digite uma nova senha para concluir a redefinição." data-updating-message="Atualizando senha..." data-success-message="Sua senha foi atualizada. Você pode voltar ao acesso da conta VivaPantry." data-failure-message="Não foi possível atualizar a senha.">
+      <label for="new-password">Nova senha</label>
+      <input id="new-password" name="password" type="password" autocomplete="new-password" required minlength="8" placeholder="Pelo menos 8 caracteres">
+      <button class="button primary" type="submit">Atualizar senha</button>
+      <p class="form-status" id="update-password-status" role="status" aria-live="polite">Verificando o link de redefinição...</p>
+    </form>
+    <div class="hero-actions">
+      <a class="button secondary" href="/pt-BR/sign-in/">Voltar ao acesso da conta</a>
+    </div>
+    <nav class="utility-language-nav" aria-label="Idioma">
+      <a href="/update-password/" hreflang="en" lang="en">English</a>
+      <a href="/es/update-password/" hreflang="es" lang="es">Español</a>
+      <a href="/pt-BR/update-password/" hreflang="pt-BR" lang="pt-BR" aria-current="true">Português Brasil</a>
+    </nav>
+  </main>
+  <script src="/supabase-web-config.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.105.1/dist/umd/supabase.min.js" defer></script>
+  <script src="/password-update.js" defer></script>
+</body>
+</html>

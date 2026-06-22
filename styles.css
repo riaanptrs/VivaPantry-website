@@ -86,6 +86,13 @@ p, li { color: var(--muted); line-height: 1.65; font-size: 17px; }
 .site-footer p { margin: 0; font-size: 14px; }
 .utility-page { min-height: 100vh; display: grid; place-content: center; padding: 24px; text-align: center; }
 .web-access-page { width: min(720px, calc(100% - 36px)); margin: 0 auto; justify-items: center; }
+.utility-language-nav { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 16px; }
+.utility-language-nav a { font-size: 14px; font-weight: 750; text-decoration: none; }
+.account-form { width: min(100%, 440px); display: grid; gap: 10px; margin-top: 18px; text-align: left; }
+.account-form label { color: var(--ink); font-size: 14px; font-weight: 800; }
+.account-form input { width: 100%; min-height: 48px; border: 1px solid var(--line); border-radius: 8px; padding: 0 14px; background: var(--white); color: var(--ink); font: inherit; }
+.account-form .button { width: 100%; border: 0; cursor: pointer; }
+.form-status { min-height: 28px; margin: 4px 0 0; font-size: 14px; line-height: 1.45; text-align: center; }
 @media (max-width: 860px) {
   .site-header { align-items: flex-start; flex-direction: column; }
   .brand, .nav, .app-cta-nav, .language-nav { width: 100%; }

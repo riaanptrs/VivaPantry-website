@@ -1,0 +1,4 @@
+window.VivaPantrySupabaseConfig = {
+  supabaseUrl: '',
+  supabaseAnonKey: ''
+};

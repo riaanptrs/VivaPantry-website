@@ -164,8 +164,63 @@
   "webAccess": {
     "navLabel": "Acceso web de VivaPantry",
     "openWeb": "Estado del acceso web",
-    "signIn": "Acceso a la cuenta",
-    "createAccount": "Configuración de cuenta"
+    "signIn": "Iniciar sesión",
+    "createAccount": "Crear cuenta"
+  },
+  "accountAccess": {
+    "eyebrow": "VivaPantry Web",
+    "contactSupport": "Contactar soporte",
+    "backHome": "Volver a VivaPantry",
+    "resetPassword": "Restablecer contraseña",
+    "backToAccountAccess": "Volver al acceso de cuenta",
+    "emailLabel": "Correo de la cuenta",
+    "emailPlaceholder": "tu@example.com",
+    "newPasswordLabel": "Nueva contraseña",
+    "newPasswordPlaceholder": "Al menos 8 caracteres",
+    "app": {
+      "title": "Acceso web de VivaPantry",
+      "description": "Información sobre el acceso a la app web de VivaPantry.",
+      "heading": "El acceso completo desde la web se está preparando",
+      "text": "Esta página está reservada para el acceso web de VivaPantry. Usa la app móvil para la experiencia completa mientras se prepara la app web autenticada."
+    },
+    "signIn": {
+      "title": "Iniciar sesión | VivaPantry",
+      "description": "Estado del acceso web a la cuenta VivaPantry.",
+      "heading": "El inicio de sesión web aún no está disponible",
+      "text": "El inicio de sesión completo desde el navegador todavía no se lanzó en este sitio público. Puedes restablecer tu contraseña aquí, usar la app móvil para la experiencia completa o contactar soporte para ayuda con tu cuenta."
+    },
+    "createAccount": {
+      "title": "Crear cuenta | VivaPantry",
+      "description": "Estado de la configuración de cuenta VivaPantry.",
+      "heading": "La creación de cuenta web aún no está disponible",
+      "text": "La creación de cuenta se maneja actualmente en la app móvil mientras se prepara el acceso web dedicado. Contacta soporte si te interesa el acceso web o necesitas ayuda con tu cuenta."
+    },
+    "resetPasswordPage": {
+      "title": "Restablecer contraseña | VivaPantry",
+      "description": "Solicita un correo de restablecimiento de contraseña de VivaPantry.",
+      "heading": "Restablece tu contraseña",
+      "text": "Ingresa el correo de tu cuenta VivaPantry. Si la cuenta existe, Supabase enviará un enlace de restablecimiento que vuelve a este sitio para actualizar tu contraseña.",
+      "submitLabel": "Enviar correo de restablecimiento",
+      "readyMessage": "El restablecimiento usa solo el correo de tu cuenta VivaPantry.",
+      "configError": "El restablecimiento de contraseña aún no está configurado para el sitio público.",
+      "sendingMessage": "Enviando correo de restablecimiento...",
+      "successMessage": "Si existe una cuenta para ese correo, se envió un enlace de restablecimiento de contraseña.",
+      "failureMessage": "No se pudo iniciar el restablecimiento de contraseña."
+    },
+    "updatePasswordPage": {
+      "title": "Actualizar contraseña | VivaPantry",
+      "description": "Define una nueva contraseña de VivaPantry desde un correo de restablecimiento.",
+      "heading": "Define una nueva contraseña",
+      "text": "Abre esta página desde el enlace del correo de restablecimiento y elige una nueva contraseña para tu cuenta VivaPantry.",
+      "submitLabel": "Actualizar contraseña",
+      "readyMessage": "Verificando el enlace de restablecimiento...",
+      "configError": "La actualización de contraseña aún no está configurada para el sitio público.",
+      "tokenError": "Abre el enlace de restablecimiento desde tu correo antes de definir una contraseña.",
+      "sessionReadyMessage": "Ingresa una nueva contraseña para terminar el restablecimiento.",
+      "updatingMessage": "Actualizando contraseña...",
+      "successMessage": "Tu contraseña se actualizó. Puedes volver al acceso de cuenta de VivaPantry.",
+      "failureMessage": "No se pudo actualizar la contraseña."
+    }
   },
   "privacy": {
     "eyebrow": "Política de Privacidad",

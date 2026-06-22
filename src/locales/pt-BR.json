@@ -164,8 +164,63 @@
   "webAccess": {
     "navLabel": "Acesso web do VivaPantry",
     "openWeb": "Status do acesso web",
-    "signIn": "Acesso à conta",
-    "createAccount": "Configuração da conta"
+    "signIn": "Entrar",
+    "createAccount": "Criar conta"
+  },
+  "accountAccess": {
+    "eyebrow": "VivaPantry Web",
+    "contactSupport": "Falar com suporte",
+    "backHome": "Voltar ao VivaPantry",
+    "resetPassword": "Redefinir senha",
+    "backToAccountAccess": "Voltar ao acesso da conta",
+    "emailLabel": "Email da conta",
+    "emailPlaceholder": "voce@example.com",
+    "newPasswordLabel": "Nova senha",
+    "newPasswordPlaceholder": "Pelo menos 8 caracteres",
+    "app": {
+      "title": "Acesso web do VivaPantry",
+      "description": "Informações sobre acesso ao app web do VivaPantry.",
+      "heading": "O acesso completo pelo navegador está sendo preparado",
+      "text": "Esta página está reservada para o acesso web do VivaPantry. Use o app móvel para a experiência completa enquanto o app web autenticado é preparado."
+    },
+    "signIn": {
+      "title": "Entrar | VivaPantry",
+      "description": "Status do acesso web à conta VivaPantry.",
+      "heading": "O login pela web ainda não está disponível",
+      "text": "O login completo pelo navegador ainda não foi lançado neste site público. Você pode redefinir sua senha aqui, usar o app móvel para a experiência completa ou falar com o suporte para ajuda com a conta."
+    },
+    "createAccount": {
+      "title": "Criar conta | VivaPantry",
+      "description": "Status da configuração de conta VivaPantry.",
+      "heading": "A criação de conta pela web ainda não está disponível",
+      "text": "A criação de conta é feita atualmente no app móvel enquanto o acesso web dedicado é preparado. Fale com o suporte se tiver interesse no acesso web ou precisar de ajuda com sua conta."
+    },
+    "resetPasswordPage": {
+      "title": "Redefinir senha | VivaPantry",
+      "description": "Solicite um email de redefinição de senha do VivaPantry.",
+      "heading": "Redefina sua senha",
+      "text": "Digite o email da sua conta VivaPantry. Se a conta existir, o Supabase enviará um link de redefinição que volta para este site para atualizar a senha.",
+      "submitLabel": "Enviar email de redefinição",
+      "readyMessage": "A redefinição de senha usa apenas o email da conta VivaPantry.",
+      "configError": "A redefinição de senha ainda não está configurada para o site público.",
+      "sendingMessage": "Enviando email de redefinição...",
+      "successMessage": "Se existir uma conta para esse email, um link de redefinição de senha foi enviado.",
+      "failureMessage": "Não foi possível iniciar a redefinição de senha."
+    },
+    "updatePasswordPage": {
+      "title": "Atualizar senha | VivaPantry",
+      "description": "Defina uma nova senha VivaPantry a partir de um email de redefinição.",
+      "heading": "Defina uma nova senha",
+      "text": "Abra esta página pelo link do email de redefinição e escolha uma nova senha para sua conta VivaPantry.",
+      "submitLabel": "Atualizar senha",
+      "readyMessage": "Verificando o link de redefinição...",
+      "configError": "A atualização de senha ainda não está configurada para o site público.",
+      "tokenError": "Abra o link de redefinição no seu email antes de definir uma senha.",
+      "sessionReadyMessage": "Digite uma nova senha para concluir a redefinição.",
+      "updatingMessage": "Atualizando senha...",
+      "successMessage": "Sua senha foi atualizada. Você pode voltar ao acesso da conta VivaPantry.",
+      "failureMessage": "Não foi possível atualizar a senha."
+    }
   },
   "privacy": {
     "eyebrow": "Política de Privacidade",

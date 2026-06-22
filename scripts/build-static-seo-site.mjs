@@ -13,6 +13,8 @@ const webAccessRoutes = {
   app: '/app/',
   signIn: '/sign-in/',
   createAccount: '/create-account/',
+  resetPassword: '/reset-password/',
+  updatePassword: '/update-password/',
 };
 // Temporary static pages keep public CTAs from 404ing until the authenticated Expo Web app has dedicated hosting.
 const locales = {
@@ -535,60 +537,154 @@ function writeCanonicalPages() {
 }
 
 function writeUtilityPages() {
-  const accessPages = [
-    {
-      path: 'app/index.html',
-      title: 'VivaPantry web access',
-      heading: 'Web access is being prepared',
-      text: 'This page is reserved for VivaPantry web access. Use the mobile app for the full experience while account access pages are being prepared.',
-      primaryLabel: 'Contact support',
-      primaryHref: `mailto:${supportEmail}?subject=VivaPantry%20web%20access`,
-    },
-    {
-      path: 'sign-in/index.html',
-      title: 'Account access | VivaPantry',
-      heading: 'Account access is being prepared',
-      text: 'Web sign-in is not hosted on this public site yet. Use the mobile app for the full experience, or contact support if you need help with your account.',
-      primaryLabel: 'Contact support',
-      primaryHref: `mailto:${supportEmail}?subject=VivaPantry%20web%20sign-in`,
-    },
-    {
-      path: 'create-account/index.html',
-      title: 'Account setup | VivaPantry',
-      heading: 'Account setup is being prepared',
-      text: 'This page is reserved for VivaPantry account setup. Account creation currently happens in the mobile app while dedicated web access is being prepared.',
-      primaryLabel: 'Contact support',
-      primaryHref: `mailto:${supportEmail}?subject=VivaPantry%20account%20access`,
-    },
-  ];
-
-  for (const page of accessPages) {
-    writePage(page.path, `<!DOCTYPE html>
-<html lang="en">
+  const utilityLocalePaths = {
+    en: '',
+    es: 'es/',
+    'pt-BR': 'pt-BR/',
+  };
+  const utilityRoutes = {
+    app: 'app/',
+    signIn: 'sign-in/',
+    createAccount: 'create-account/',
+    resetPassword: 'reset-password/',
+    updatePassword: 'update-password/',
+  };
+  const utilityPathFor = (locale, key) => `/${utilityLocalePaths[locale]}${utilityRoutes[key]}`;
+  const utilityLanguageLinks = (currentLocale, key) => Object.keys(locales)
+    .map((code) => {
+      const active = code === currentLocale ? ' aria-current="true"' : '';
+      return `<a href="${utilityPathFor(code, key)}" hreflang="${code}" lang="${code}"${active}>${esc(locales[currentLocale].data.language[code])}</a>`;
+    })
+    .join('\n      ');
+  const utilityLayout = ({
+    locale = 'en',
+    key,
+    title,
+    description,
+    eyebrow,
+    heading,
+    text,
+    actions = [],
+    formHtml = '',
+    scriptHtml = '',
+  }) => {
+    const canonical = `${siteUrl}${utilityPathFor(locale, key)}`;
+    return `<!DOCTYPE html>
+<html lang="${attr(locales[locale].lang)}">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>${esc(page.title)}</title>
-  <meta name="description" content="VivaPantry web app access information.">
+  <title>${esc(title)}</title>
+  <meta name="description" content="${attr(description)}">
   <meta name="robots" content="noindex, nofollow">
-  <link rel="canonical" href="${siteUrl}/${page.path.replace(/index\.html$/, '')}">
+  <link rel="canonical" href="${attr(canonical)}">
   <link rel="icon" type="image/png" href="${logoPath}">
   <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
   <main class="utility-page web-access-page">
     <img src="${logoPath}" width="48" height="48" alt="">
-    <p class="eyebrow">VivaPantry Web</p>
-    <h1>${esc(page.heading)}</h1>
-    <p>${esc(page.text)}</p>
+    <p class="eyebrow">${esc(eyebrow)}</p>
+    <h1>${esc(heading)}</h1>
+    <p>${esc(text)}</p>
+${formHtml}
     <div class="hero-actions">
-      <a class="button primary" href="${attr(page.primaryHref)}">${esc(page.primaryLabel)}</a>
-      <a class="button secondary" href="/">Back to VivaPantry</a>
+      ${actions.map((action) => `<a class="button ${action.kind ?? 'secondary'}" href="${attr(action.href)}">${esc(action.label)}</a>`).join('\n      ')}
     </div>
+    <nav class="utility-language-nav" aria-label="${attr(locales[locale].data.language.label)}">
+      ${utilityLanguageLinks(locale, key)}
+    </nav>
   </main>
-</body>
+${scriptHtml}</body>
 </html>
-`);
+`;
+  };
+
+  const accessPages = [
+    {
+      key: 'app',
+      subject: 'VivaPantry web access',
+      actions: (t) => [
+        { kind: 'primary', href: `mailto:${supportEmail}?subject=VivaPantry%20web%20access`, label: t.contactSupport },
+        { href: '/', label: t.backHome },
+      ],
+    },
+    {
+      key: 'signIn',
+      actions: (t, locale) => [
+        { kind: 'primary', href: utilityPathFor(locale, 'resetPassword'), label: t.resetPassword },
+        { href: `mailto:${supportEmail}?subject=VivaPantry%20account%20access`, label: t.contactSupport },
+      ],
+    },
+    {
+      key: 'createAccount',
+      actions: (t) => [
+        { kind: 'primary', href: `mailto:${supportEmail}?subject=VivaPantry%20account%20access`, label: t.contactSupport },
+        { href: '/', label: t.backHome },
+      ],
+    },
+  ];
+
+  for (const locale of Object.keys(locales)) {
+    const t = locales[locale].data.accountAccess;
+
+    for (const page of accessPages) {
+      const copy = t[page.key];
+      writePage(`${utilityLocalePaths[locale]}${utilityRoutes[page.key]}index.html`, utilityLayout({
+        locale,
+        key: page.key,
+        title: copy.title,
+        description: copy.description,
+        eyebrow: t.eyebrow,
+        heading: copy.heading,
+        text: copy.text,
+        actions: page.actions(t, locale),
+      }));
+    }
+
+    const resetCopy = t.resetPasswordPage;
+    writePage(`${utilityLocalePaths[locale]}${utilityRoutes.resetPassword}index.html`, utilityLayout({
+      locale,
+      key: 'resetPassword',
+      title: resetCopy.title,
+      description: resetCopy.description,
+      eyebrow: t.eyebrow,
+      heading: resetCopy.heading,
+      text: resetCopy.text,
+      actions: [{ href: utilityPathFor(locale, 'signIn'), label: t.backToAccountAccess }],
+      formHtml: `    <form class="account-form" id="reset-password-form" data-config-error="${attr(resetCopy.configError)}" data-sending-message="${attr(resetCopy.sendingMessage)}" data-success-message="${attr(resetCopy.successMessage)}" data-failure-message="${attr(resetCopy.failureMessage)}">
+      <label for="reset-email">${esc(t.emailLabel)}</label>
+      <input id="reset-email" name="email" type="email" autocomplete="email" required placeholder="${attr(t.emailPlaceholder)}">
+      <button class="button primary" type="submit">${esc(resetCopy.submitLabel)}</button>
+      <p class="form-status" id="reset-password-status" role="status" aria-live="polite">${esc(resetCopy.readyMessage)}</p>
+    </form>`,
+      scriptHtml: `  <script src="/supabase-web-config.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.105.1/dist/umd/supabase.min.js" defer></script>
+  <script src="/password-reset.js" defer></script>
+`,
+    }));
+
+    const updateCopy = t.updatePasswordPage;
+    writePage(`${utilityLocalePaths[locale]}${utilityRoutes.updatePassword}index.html`, utilityLayout({
+      locale,
+      key: 'updatePassword',
+      title: updateCopy.title,
+      description: updateCopy.description,
+      eyebrow: t.eyebrow,
+      heading: updateCopy.heading,
+      text: updateCopy.text,
+      actions: [{ href: utilityPathFor(locale, 'signIn'), label: t.backToAccountAccess }],
+      formHtml: `    <form class="account-form" id="update-password-form" data-config-error="${attr(updateCopy.configError)}" data-token-error="${attr(updateCopy.tokenError)}" data-session-ready-message="${attr(updateCopy.sessionReadyMessage)}" data-updating-message="${attr(updateCopy.updatingMessage)}" data-success-message="${attr(updateCopy.successMessage)}" data-failure-message="${attr(updateCopy.failureMessage)}">
+      <label for="new-password">${esc(t.newPasswordLabel)}</label>
+      <input id="new-password" name="password" type="password" autocomplete="new-password" required minlength="8" placeholder="${attr(t.newPasswordPlaceholder)}">
+      <button class="button primary" type="submit">${esc(updateCopy.submitLabel)}</button>
+      <p class="form-status" id="update-password-status" role="status" aria-live="polite">${esc(updateCopy.readyMessage)}</p>
+    </form>`,
+      scriptHtml: `  <script src="/supabase-web-config.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.105.1/dist/umd/supabase.min.js" defer></script>
+  <script src="/password-update.js" defer></script>
+`,
+    }));
   }
 
   writePage('google-drive-auth.html', `<!DOCTYPE html>
@@ -663,6 +759,18 @@ Disallow: /google-drive-auth.html
 Disallow: /app/
 Disallow: /sign-in/
 Disallow: /create-account/
+Disallow: /reset-password/
+Disallow: /update-password/
+Disallow: /es/app/
+Disallow: /es/sign-in/
+Disallow: /es/create-account/
+Disallow: /es/reset-password/
+Disallow: /es/update-password/
+Disallow: /pt-BR/app/
+Disallow: /pt-BR/sign-in/
+Disallow: /pt-BR/create-account/
+Disallow: /pt-BR/reset-password/
+Disallow: /pt-BR/update-password/
 Disallow: /household-invite
 Disallow: /dev/
 Disallow: /(auth)/
@@ -770,6 +878,13 @@ p, li { color: var(--muted); line-height: 1.65; font-size: 17px; }
 .site-footer p { margin: 0; font-size: 14px; }
 .utility-page { min-height: 100vh; display: grid; place-content: center; padding: 24px; text-align: center; }
 .web-access-page { width: min(720px, calc(100% - 36px)); margin: 0 auto; justify-items: center; }
+.utility-language-nav { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 16px; }
+.utility-language-nav a { font-size: 14px; font-weight: 750; text-decoration: none; }
+.account-form { width: min(100%, 440px); display: grid; gap: 10px; margin-top: 18px; text-align: left; }
+.account-form label { color: var(--ink); font-size: 14px; font-weight: 800; }
+.account-form input { width: 100%; min-height: 48px; border: 1px solid var(--line); border-radius: 8px; padding: 0 14px; background: var(--white); color: var(--ink); font: inherit; }
+.account-form .button { width: 100%; border: 0; cursor: pointer; }
+.form-status { min-height: 28px; margin: 4px 0 0; font-size: 14px; line-height: 1.45; text-align: center; }
 @media (max-width: 860px) {
   .site-header { align-items: flex-start; flex-direction: column; }
   .brand, .nav, .app-cta-nav, .language-nav { width: 100%; }
@@ -809,6 +924,156 @@ document.querySelectorAll('a[href^="#"]').forEach(function (link) {
     target.scrollIntoView({ behavior: 'smooth', block: 'start' });
   });
 });
+`);
+
+  writePage('supabase-web-config.js', `window.VivaPantrySupabaseConfig = {
+  supabaseUrl: '',
+  supabaseAnonKey: ''
+};
+`);
+
+  writePage('password-reset.js', `(function () {
+  var form = document.getElementById('reset-password-form');
+  var status = document.getElementById('reset-password-status');
+  if (!form || !status) return;
+
+  function setStatus(message) {
+    status.textContent = message;
+  }
+
+  function getClient() {
+    var config = window.VivaPantrySupabaseConfig || {};
+    if (!config.supabaseUrl || !config.supabaseAnonKey || !window.supabase) {
+      throw new Error(form.getAttribute('data-config-error') || 'Password reset is not configured yet.');
+    }
+    return window.supabase.createClient(config.supabaseUrl, config.supabaseAnonKey, {
+      auth: {
+        persistSession: false,
+        autoRefreshToken: false,
+        detectSessionInUrl: false
+      }
+    });
+  }
+
+  form.addEventListener('submit', function (event) {
+    event.preventDefault();
+    var email = String(new FormData(form).get('email') || '').trim();
+    if (!email) return;
+
+    try {
+      setStatus(form.getAttribute('data-sending-message') || 'Sending reset email...');
+      getClient().auth.resetPasswordForEmail(email, {
+        redirectTo: 'https://vivapantry.com/update-password/'
+      }).then(function (result) {
+        if (result.error) throw result.error;
+        form.reset();
+        setStatus(form.getAttribute('data-success-message') || 'If an account exists for that email, a password reset link has been sent.');
+      }).catch(function (error) {
+        setStatus(error && error.message ? error.message : form.getAttribute('data-failure-message') || 'Password reset could not be started.');
+      });
+    } catch (error) {
+      setStatus(error && error.message ? error.message : form.getAttribute('data-failure-message') || 'Password reset could not be started.');
+    }
+  });
+})();
+`);
+
+  writePage('password-update.js', `(function () {
+  var form = document.getElementById('update-password-form');
+  var status = document.getElementById('update-password-status');
+  if (!form || !status) return;
+
+  var client;
+
+  function setStatus(message) {
+    status.textContent = message;
+  }
+
+  function setFormDisabled(disabled) {
+    Array.prototype.forEach.call(form.elements, function (element) {
+      element.disabled = disabled;
+    });
+  }
+
+  function getParams() {
+    var params = new URLSearchParams(window.location.search || '');
+    var hash = new URLSearchParams((window.location.hash || '').replace(/^#/, ''));
+    hash.forEach(function (value, key) {
+      if (!params.has(key)) params.set(key, value);
+    });
+    return params;
+  }
+
+  function getClient() {
+    var config = window.VivaPantrySupabaseConfig || {};
+    if (!config.supabaseUrl || !config.supabaseAnonKey || !window.supabase) {
+      throw new Error(form.getAttribute('data-config-error') || 'Password update is not configured yet.');
+    }
+    if (!client) {
+      client = window.supabase.createClient(config.supabaseUrl, config.supabaseAnonKey, {
+        auth: {
+          persistSession: false,
+          autoRefreshToken: false,
+          detectSessionInUrl: false
+        }
+      });
+    }
+    return client;
+  }
+
+  function prepareSession() {
+    var params = getParams();
+    var error = params.get('error_description') || params.get('error');
+    if (error) {
+      return Promise.reject(new Error(error));
+    }
+
+    var auth = getClient().auth;
+    var code = params.get('code');
+    var tokenHash = params.get('token_hash');
+    var accessToken = params.get('access_token');
+    var refreshToken = params.get('refresh_token');
+
+    if (code) return auth.exchangeCodeForSession(code);
+    if (tokenHash) return auth.verifyOtp({ token_hash: tokenHash, type: 'recovery' });
+    if (accessToken && refreshToken) return auth.setSession({ access_token: accessToken, refresh_token: refreshToken });
+
+    return Promise.reject(new Error(form.getAttribute('data-token-error') || 'Open the reset link from your email before setting a password.'));
+  }
+
+  try {
+    prepareSession().then(function (result) {
+      if (result.error) throw result.error;
+      setFormDisabled(false);
+      setStatus(form.getAttribute('data-session-ready-message') || 'Enter a new password to finish the reset.');
+    }).catch(function (error) {
+      setFormDisabled(true);
+      setStatus(error && error.message ? error.message : 'The reset link could not be verified.');
+    });
+  } catch (error) {
+    setFormDisabled(true);
+    setStatus(error && error.message ? error.message : 'The reset link could not be verified.');
+  }
+
+  form.addEventListener('submit', function (event) {
+    event.preventDefault();
+    var password = String(new FormData(form).get('password') || '');
+    if (!password) return;
+
+    try {
+      setStatus(form.getAttribute('data-updating-message') || 'Updating password...');
+      getClient().auth.updateUser({ password: password }).then(function (result) {
+        if (result.error) throw result.error;
+        form.reset();
+        setStatus(form.getAttribute('data-success-message') || 'Your password has been updated. You can return to VivaPantry account access.');
+      }).catch(function (error) {
+        setStatus(error && error.message ? error.message : form.getAttribute('data-failure-message') || 'Password could not be updated.');
+      });
+    } catch (error) {
+      setStatus(error && error.message ? error.message : form.getAttribute('data-failure-message') || 'Password could not be updated.');
+    }
+  });
+})();
 `);
 }
 

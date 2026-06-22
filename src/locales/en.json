@@ -164,8 +164,63 @@
   "webAccess": {
     "navLabel": "VivaPantry web access",
     "openWeb": "Web access status",
-    "signIn": "Account access",
-    "createAccount": "Account setup"
+    "signIn": "Sign in",
+    "createAccount": "Sign up"
+  },
+  "accountAccess": {
+    "eyebrow": "VivaPantry Web",
+    "contactSupport": "Contact support",
+    "backHome": "Back to VivaPantry",
+    "resetPassword": "Reset password",
+    "backToAccountAccess": "Back to account access",
+    "emailLabel": "Account email",
+    "emailPlaceholder": "you@example.com",
+    "newPasswordLabel": "New password",
+    "newPasswordPlaceholder": "At least 8 characters",
+    "app": {
+      "title": "VivaPantry web access",
+      "description": "VivaPantry web app access information.",
+      "heading": "Full web app access is being prepared",
+      "text": "This page is reserved for VivaPantry web access. Use the mobile app for the full experience while the authenticated web app is being prepared."
+    },
+    "signIn": {
+      "title": "Sign in | VivaPantry",
+      "description": "VivaPantry web account access status.",
+      "heading": "Web sign-in is not available yet",
+      "text": "Full browser sign-in is not launched on this public site yet. You can reset your password here, use the mobile app for the full experience, or contact support for account help."
+    },
+    "createAccount": {
+      "title": "Sign up | VivaPantry",
+      "description": "VivaPantry account setup status.",
+      "heading": "Web account creation is not available yet",
+      "text": "Account creation is currently handled in the mobile app while dedicated web access is being prepared. Contact support if you are interested in web access or need help with your account."
+    },
+    "resetPasswordPage": {
+      "title": "Reset password | VivaPantry",
+      "description": "Request a VivaPantry password reset email.",
+      "heading": "Reset your password",
+      "text": "Enter the email for your VivaPantry account. If the account exists, Supabase will send a reset link that returns here to update your password.",
+      "submitLabel": "Send reset email",
+      "readyMessage": "Password reset uses VivaPantry account email only.",
+      "configError": "Password reset is not configured for the public website yet.",
+      "sendingMessage": "Sending reset email...",
+      "successMessage": "If an account exists for that email, a password reset link has been sent.",
+      "failureMessage": "Password reset could not be started."
+    },
+    "updatePasswordPage": {
+      "title": "Update password | VivaPantry",
+      "description": "Set a new VivaPantry password from a reset email.",
+      "heading": "Set a new password",
+      "text": "Open this page from the reset email link, then choose a new password for your VivaPantry account.",
+      "submitLabel": "Update password",
+      "readyMessage": "Checking the reset link...",
+      "configError": "Password update is not configured for the public website yet.",
+      "tokenError": "Open the reset link from your email before setting a password.",
+      "sessionReadyMessage": "Enter a new password to finish the reset.",
+      "updatingMessage": "Updating password...",
+      "successMessage": "Your password has been updated. You can return to VivaPantry account access.",
+      "failureMessage": "Password could not be updated."
+    }
   },
   "privacy": {
     "eyebrow": "Privacy Policy",
