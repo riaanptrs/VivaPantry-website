@@ -11,8 +11,8 @@ const androidPackage = 'com.riaan.vivapantry';
 const currentYear = new Date().getFullYear();
 const webAccessRoutes = {
   app: '/app/',
-  signIn: '/sign-in/',
-  createAccount: '/create-account/',
+  signIn: '/app/sign-in/',
+  createAccount: '/app/create-account/',
   resetPassword: '/reset-password/',
   updatePassword: '/update-password/',
 };
