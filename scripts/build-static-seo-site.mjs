@@ -1,13 +1,27 @@
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 
-const root = path.resolve('pantrypal-website');
+const root = path.resolve(process.env.VIVAPANTRY_SITE_ROOT ?? '.');
 const siteUrl = 'https://vivapantry.com';
 const supportEmail = 'support@vivapantry.com';
 const logoPath = '/assets/Mainicon.png';
 const ogImage = `${siteUrl}${logoPath}`;
 const appVersion = '1.0.1';
 const androidPackage = 'com.riaan.vivapantry';
+const androidLaunchState = process.env.VIVAPANTRY_ANDROID_LAUNCH_STATE === 'production'
+  ? 'production'
+  : 'testing';
+const googlePlayLinks = {
+  production: process.env.VIVAPANTRY_GOOGLE_PLAY_URL
+    || `https://play.google.com/store/apps/details?id=${androidPackage}`,
+  testingOptIn: process.env.VIVAPANTRY_ANDROID_TESTING_OPT_IN_URL
+    || `https://play.google.com/apps/testing/${androidPackage}`,
+};
+const googlePlayBadgePaths = {
+  en: '/assets/google-play/google-play-badge-en.png',
+  es: '/assets/google-play/google-play-badge-es.png',
+  'pt-BR': '/assets/google-play/google-play-badge-pt-BR.png',
+};
 const currentYear = new Date().getFullYear();
 const webAccessRoutes = {
   app: '/app/',
@@ -16,7 +30,6 @@ const webAccessRoutes = {
   resetPassword: '/reset-password/',
   updatePassword: '/update-password/',
 };
-// Temporary static pages keep public CTAs from 404ing until the authenticated Expo Web app has dedicated hosting.
 const locales = {
   en: {
     folder: 'en',
@@ -114,6 +127,40 @@ function formatCopyright(value) {
   return esc(String(value ?? '').replaceAll('{year}', String(currentYear)));
 }
 
+function googlePlayUrl() {
+  return androidLaunchState === 'production'
+    ? googlePlayLinks.production
+    : googlePlayLinks.testingOptIn;
+}
+
+function googlePlayNotice(copy) {
+  return androidLaunchState === 'production'
+    ? copy.productionNotice
+    : copy.testingNotice;
+}
+
+function googlePlayLabel(copy) {
+  return androidLaunchState === 'production'
+    ? copy.googlePlayCta
+    : copy.androidEarlyAccessCta;
+}
+
+function appCtaBlock(locale, { variant = 'default' } = {}) {
+  const copy = locales[locale].data.webAccess;
+  const classes = ['app-download-block', `app-download-${variant}`].join(' ');
+  return `<div class="${classes}" aria-label="${attr(copy.appDownloadAria)}">
+          <a class="google-play-badge" href="${attr(googlePlayUrl())}" aria-label="${attr(googlePlayLabel(copy))}">
+            <img src="${attr(googlePlayBadgePaths[locale] ?? googlePlayBadgePaths.en)}" alt="${attr(copy.googlePlayBadgeAlt)}" width="180" height="54">
+          </a>
+          <div class="web-cta-links">
+            <a href="${webAccessRoutes.signIn}">${esc(copy.webSignInCta)}</a>
+            <a href="${webAccessRoutes.createAccount}">${esc(copy.createAccountCta)}</a>
+            <a href="${webAccessRoutes.app}">${esc(copy.openWebAppCta)}</a>
+          </div>
+          <p class="download-notice">${esc(googlePlayNotice(copy))}</p>
+        </div>`;
+}
+
 function alternates(key) {
   if (key === 'home') {
     return [
@@ -174,19 +221,11 @@ ${schema}</head>
       <span>VivaPantry</span>
     </a>
     <nav class="nav" aria-label="${attr(nav.primary ?? 'Primary navigation')}">
-      <a href="${hrefFor(locale, 'home')}">${esc(nav.home)}</a>
       <a href="${hrefFor(locale, 'home')}#features">${esc(nav.features)}</a>
       <a href="${hrefFor(locale, 'home')}#how-it-works">${esc(nav.howItWorks)}</a>
       <a href="${hrefFor(locale, 'pricing')}">${esc(nav.pricing)}</a>
-      <a href="${hrefFor(locale, 'privacy')}">${esc(nav.privacy)}</a>
-      <a href="${hrefFor(locale, 'terms')}">${esc(nav.terms)}</a>
       <a href="${hrefFor(locale, 'support')}">${esc(nav.support)}</a>
-      <a href="${hrefFor(locale, 'delete-account')}">${esc(nav.deleteAccount)}</a>
-    </nav>
-    <nav class="app-cta-nav" aria-label="${attr(data.webAccess.navLabel)}">
-      <a class="app-cta primary" href="${webAccessRoutes.app}">${esc(data.webAccess.openWeb)}</a>
-      <a class="app-cta" href="${webAccessRoutes.signIn}">${esc(data.webAccess.signIn)}</a>
-      <a class="app-cta" href="${webAccessRoutes.createAccount}">${esc(data.webAccess.createAccount)}</a>
+      <a class="app-cta primary" href="${webAccessRoutes.signIn}">${esc(nav.primaryCta ?? data.webAccess.webSignInCta)}</a>
     </nav>
     <nav class="language-nav" aria-label="${attr(data.language.label)}">
       ${Object.keys(locales)
@@ -205,6 +244,9 @@ ${body}
       <a href="${hrefFor(locale, 'terms')}">${esc(data.footer.terms)}</a>
       <a href="${hrefFor(locale, 'support')}">${esc(data.footer.support)}</a>
       <a href="${hrefFor(locale, 'delete-account')}">${esc(data.footer.deleteAccount)}</a>
+      <a href="${webAccessRoutes.app}">${esc(data.webAccess.openWebAppCta)}</a>
+      <a href="${webAccessRoutes.signIn}">${esc(data.webAccess.webSignInCta)}</a>
+      <a href="${webAccessRoutes.createAccount}">${esc(data.webAccess.createAccountCta)}</a>
     </nav>
     <p><a href="mailto:${supportEmail}">${supportEmail}</a></p>
     <p>${formatCopyright(data.footer.copyright)}</p>
@@ -252,10 +294,10 @@ function homeBody(locale) {
   const t = locales[locale].data.home;
   const featureIcons = {
     pantryTracking: '/assets/icons/pantry.svg',
-    receiptScanning: '/assets/icons/receipt-scan.svg',
-    aiMealPlanning: '/assets/icons/ai-spark.svg',
     groceryLists: '/assets/icons/shopping-list.svg',
+    mealPlanning: '/assets/icons/meal-plan.svg',
     recipes: '/assets/icons/recipes.svg',
+    receiptScanning: '/assets/icons/receipt-scan.svg',
     householdPreferences: '/assets/icons/household.svg',
   };
 
@@ -265,53 +307,47 @@ function homeBody(locale) {
         <h1>${esc(t.heroTitle)}</h1>
         <p class="lead">${esc(t.heroText)}</p>
         <div class="hero-actions" aria-label="${attr(t.primaryActions)}">
-          <a class="button primary" href="mailto:${supportEmail}?subject=VivaPantry%20Android%20access">${esc(t.primaryCta)}</a>
-          <a class="button secondary" href="${hrefFor(locale, 'privacy')}">${esc(t.secondaryCta)}</a>
+          <a class="button primary" href="${webAccessRoutes.createAccount}">${esc(t.primaryCta)}</a>
+          <a class="button secondary" href="#how-it-works">${esc(t.secondaryCta)}</a>
         </div>
+        ${appCtaBlock(locale, { variant: 'hero' })}
         <p class="trust-note">${esc(t.trustNote)}</p>
       </div>
-      <div class="hero-showcase" aria-label="${attr(t.previewAria)}">
-        <img class="hero-phone primary-phone" src="/assets/images/app-home-en.png" width="458" height="994" alt="${attr(t.previewAria)}" fetchpriority="high" decoding="async">
-        <img class="hero-phone secondary-phone" src="/assets/images/app-shop-console-en.png" width="900" height="2000" alt="${attr(t.features.groceryLists.title)}" fetchpriority="high" decoding="async">
+      <div class="hero-showcase loop-showcase" aria-label="${attr(t.flowAria)}">
+        <div class="loop-orbit">
+          ${Object.values(t.flow).map((item, index) => `<span class="loop-node node-${index + 1}"><strong>${esc(item.icon)}</strong>${esc(item.label)}</span>`).join('\n          ')}
+        </div>
+        <div class="system-card">
+          <strong>VivaPantry</strong>
+          <span>${esc(t.loopTitle)}</span>
+        </div>
       </div>
     </section>
-    <section class="flow-strip" aria-label="${attr(t.flowAria)}">
-      ${Object.values(t.flow).map((item) => `<span><strong>${esc(item.icon)}</strong>${esc(item.label)}</span>`).join('\n      ')}
+    <section class="value-section" aria-label="${attr(t.valueEyebrow)}">
+      <p class="eyebrow">${esc(t.valueEyebrow)}</p>
+      <h2>${esc(t.valueTitle)}</h2>
+      <div class="value-grid">
+        ${t.valueCards.map((item) => `<article class="value-card">
+          <h3>${esc(item.title)}</h3>
+          <p>${esc(item.text)}</p>
+        </article>`).join('\n        ')}
+      </div>
     </section>
-    <section class="proof-strip" aria-label="${attr(t.featuresEyebrow)}">
-      <article>
-        <strong>${esc(t.flow.plan.label)}</strong>
-        <span>${esc(t.features.aiMealPlanning.title)}</span>
-      </article>
-      <article>
-        <strong>${esc(t.flow.shop.label)}</strong>
-        <span>${esc(t.features.groceryLists.title)}</span>
-      </article>
-      <article>
-        <strong>${esc(t.flow.store.label)}</strong>
-        <span>${esc(t.features.pantryTracking.title)}</span>
-      </article>
-      <article>
-        <strong>${esc(t.flow.repeat.label)}</strong>
-        <span>${esc(t.features.receiptScanning.title)}</span>
-      </article>
-    </section>
-    <section id="how-it-works" class="split-section">
+    <section id="how-it-works" class="split-section loop-section">
       <div>
         <p class="eyebrow">${esc(t.loopEyebrow)}</p>
         <h2>${esc(t.loopTitle)}</h2>
         <p>${esc(t.loopText)}</p>
-        <p>${esc(t.loopBenefit)}</p>
+        <ol class="how-steps">
+          ${t.howSteps.map((item) => `<li>${esc(item)}</li>`).join('\n          ')}
+        </ol>
       </div>
-      <img src="/assets/images/viva-loop.png" width="1600" height="900" loading="lazy" alt="${attr(t.loopAria)}">
-    </section>
-    <section class="screenshot-section">
-      <div class="screenshot-copy">
-        <p class="eyebrow">${esc(t.features.groceryLists.title)}</p>
-        <h2>${esc(t.features.groceryLists.text)}</h2>
-        <p>${esc(t.loopBenefit)}</p>
+      <div class="flow-board" aria-label="${attr(t.flowAria)}">
+        ${Object.values(t.flow).map((item) => `<article>
+          <span>${esc(item.icon)}</span>
+          <strong>${esc(item.label)}</strong>
+        </article>`).join('\n        ')}
       </div>
-      <img class="wide-screenshot" src="/assets/images/app-shop-console-en.png" width="900" height="2000" loading="lazy" alt="${attr(t.features.groceryLists.title)}">
     </section>
     <section id="features" class="content-section">
       <p class="eyebrow">${esc(t.featuresEyebrow)}</p>
@@ -324,25 +360,36 @@ function homeBody(locale) {
         </article>`).join('\n        ')}
       </div>
     </section>
-    <section class="split-section app-preview">
-      <div>
-        <p class="eyebrow">${esc(t.readinessEyebrow)}</p>
-        <h2>${esc(t.readinessTitle)}</h2>
-        <p>${esc(t.readinessText)}</p>
-        <ul class="readiness-list">
-          ${Object.values(t.readiness).map((item) => `<li>${esc(item)}</li>`).join('\n          ')}
-        </ul>
-        <div class="hero-actions">
-          <a class="button primary" href="mailto:${supportEmail}?subject=VivaPantry%20Android%20release">${esc(t.readinessCta)}</a>
-          <a class="button secondary" href="${hrefFor(locale, 'privacy')}">${esc(t.readinessSecondary)}</a>
-        </div>
-      </div>
-      <img src="/assets/images/app-home-en.png" width="458" height="994" loading="lazy" alt="${attr(t.previewAria)}">
-    </section>
     <section class="content-section trust-section">
       <p class="eyebrow">${esc(t.trustEyebrow)}</p>
       <h2>${esc(t.trustTitle)}</h2>
       <p>${esc(t.trustText)}</p>
+      <div class="trust-grid">
+        ${t.trustCards.map((item) => `<article class="trust-card">
+          <h3>${esc(item.title)}</h3>
+          <p>${esc(item.text)}</p>
+        </article>`).join('\n        ')}
+      </div>
+    </section>
+    <section class="content-section faq-section">
+      <p class="eyebrow">${esc(t.faqEyebrow)}</p>
+      <h2>${esc(t.faqTitle)}</h2>
+      <div class="faq-list">
+        ${t.faqs.map((item) => `<details>
+          <summary>${esc(item.q)}</summary>
+          <p>${esc(item.a)}</p>
+        </details>`).join('\n        ')}
+      </div>
+    </section>
+    <section class="final-cta">
+      <p class="eyebrow">${esc(t.finalEyebrow)}</p>
+      <h2>${esc(t.finalTitle)}</h2>
+      <p>${esc(t.finalText)}</p>
+      <div class="hero-actions">
+        <a class="button primary" href="${webAccessRoutes.createAccount}">${esc(t.finalCta)}</a>
+        <a class="button secondary" href="${webAccessRoutes.signIn}">${esc(t.finalSecondary)}</a>
+      </div>
+      ${appCtaBlock(locale, { variant: 'final' })}
     </section>`;
 }
 
@@ -380,8 +427,8 @@ function pricingBody(locale) {
       <h1>${esc(t.title)}</h1>
       <p class="lead">${esc(t.lead)}</p>
       <div class="hero-actions">
-        <a class="button primary" href="${webAccessRoutes.createAccount}">${esc(locales[locale].data.webAccess.createAccount)}</a>
-        <a class="button secondary" href="${webAccessRoutes.signIn}">${esc(locales[locale].data.webAccess.signIn)}</a>
+        <a class="button primary" href="${webAccessRoutes.createAccount}">${esc(locales[locale].data.webAccess.createAccountCta)}</a>
+        <a class="button secondary" href="${webAccessRoutes.signIn}">${esc(locales[locale].data.webAccess.webSignInCta)}</a>
       </div>
     </section>
     <section class="pricing-grid" aria-label="${attr(t.cardsLabel)}">
@@ -397,6 +444,12 @@ function pricingBody(locale) {
         <p class="price-line">${esc(t.premiumPrice)}</p>
         <ul>${t.premiumItems.map((item) => `<li>${esc(item)}</li>`).join('')}</ul>
       </article>
+    </section>
+    <section class="content-section launch-state">
+      <p class="eyebrow">${esc(t.launchStateEyebrow)}</p>
+      <h2>${esc(t.launchStateTitle)}</h2>
+      <p>${esc(androidLaunchState === 'production' ? t.productionLaunchText : t.testingLaunchText)}</p>
+      ${appCtaBlock(locale, { variant: 'pricing' })}
     </section>
     <section class="content-section pricing-note">
       <p>${esc(t.note)}</p>
@@ -543,13 +596,13 @@ function writeUtilityPages() {
     'pt-BR': 'pt-BR/',
   };
   const utilityRoutes = {
-    app: 'app/',
     signIn: 'sign-in/',
     createAccount: 'create-account/',
     resetPassword: 'reset-password/',
     updatePassword: 'update-password/',
   };
   const utilityPathFor = (locale, key) => `/${utilityLocalePaths[locale]}${utilityRoutes[key]}`;
+  const appAuthTargetFor = (key) => (key === 'signIn' ? webAccessRoutes.signIn : webAccessRoutes.createAccount);
   const utilityLanguageLinks = (currentLocale, key) => Object.keys(locales)
     .map((code) => {
       const active = code === currentLocale ? ' aria-current="true"' : '';
@@ -600,45 +653,20 @@ ${scriptHtml}</body>
 `;
   };
 
-  const accessPages = [
-    {
-      key: 'app',
-      subject: 'VivaPantry web access',
-      actions: (t) => [
-        { kind: 'primary', href: `mailto:${supportEmail}?subject=VivaPantry%20web%20access`, label: t.contactSupport },
-        { href: '/', label: t.backHome },
-      ],
-    },
-    {
-      key: 'signIn',
-      actions: (t, locale) => [
-        { kind: 'primary', href: utilityPathFor(locale, 'resetPassword'), label: t.resetPassword },
-        { href: `mailto:${supportEmail}?subject=VivaPantry%20account%20access`, label: t.contactSupport },
-      ],
-    },
-    {
-      key: 'createAccount',
-      actions: (t) => [
-        { kind: 'primary', href: `mailto:${supportEmail}?subject=VivaPantry%20account%20access`, label: t.contactSupport },
-        { href: '/', label: t.backHome },
-      ],
-    },
-  ];
-
   for (const locale of Object.keys(locales)) {
     const t = locales[locale].data.accountAccess;
 
-    for (const page of accessPages) {
-      const copy = t[page.key];
-      writePage(`${utilityLocalePaths[locale]}${utilityRoutes[page.key]}index.html`, utilityLayout({
-        locale,
-        key: page.key,
+    for (const key of ['signIn', 'createAccount']) {
+      const copy = t[key];
+      const target = appAuthTargetFor(key);
+      writePage(`${utilityLocalePaths[locale]}${utilityRoutes[key]}index.html`, aliasPage({
+        filePath: `${utilityLocalePaths[locale]}${utilityRoutes[key]}index.html`,
+        lang: locales[locale].lang,
         title: copy.title,
         description: copy.description,
-        eyebrow: t.eyebrow,
-        heading: copy.heading,
-        text: copy.text,
-        actions: page.actions(t, locale),
+        canonical: `${siteUrl}${target}`,
+        target,
+        refresh: true,
       }));
     }
 
@@ -792,89 +820,126 @@ Sitemap: ${siteUrl}/sitemap.xml
 function writeAssets() {
   writePage('styles.css', `:root {
   color-scheme: light;
-  --green: #4caf50;
-  --green-dark: #14532d;
-  --green-soft: #eaf7ea;
-  --mint: #f0faf3;
-  --sun: #fff4c7;
+  --leaf: #3f8f4c;
+  --leaf-dark: #17472a;
+  --leaf-soft: #eaf6ec;
+  --sage: #6f8f72;
   --ink: #172016;
-  --muted: #5f6f63;
-  --line: #dfe8df;
-  --paper: #fffef9;
-  --white: #ffffff;
+  --muted: #59675d;
+  --line: #dce7dc;
+  --cream: #fffdf7;
+  --paper: #ffffff;
+  --gold: #f4c95d;
+  --blue: #4f7cac;
+  --rose: #b86b77;
   font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 * { box-sizing: border-box; }
 html { max-width: 100%; overflow-x: hidden; scroll-behavior: smooth; }
-body { max-width: 100%; margin: 0; overflow-x: hidden; background: var(--paper); color: var(--ink); }
-a { color: var(--green-dark); }
+body { max-width: 100%; margin: 0; overflow-x: hidden; background: var(--cream); color: var(--ink); }
+a { color: var(--leaf-dark); }
+a:focus-visible, button:focus-visible, input:focus-visible, summary:focus-visible { outline: 3px solid rgba(79, 124, 172, 0.55); outline-offset: 3px; border-radius: 8px; }
 img { max-width: 100%; height: auto; }
-.skip-link { position: absolute; left: -999px; top: 12px; background: var(--white); padding: 10px 14px; border-radius: 8px; z-index: 10; }
+.skip-link { position: absolute; left: -999px; top: 12px; background: var(--paper); padding: 10px 14px; border-radius: 8px; z-index: 10; box-shadow: 0 10px 30px rgba(23, 32, 22, 0.15); }
 .skip-link:focus { left: 12px; }
-.site-header { display: flex; align-items: center; gap: 20px; justify-content: space-between; width: 100%; max-width: 100%; padding: 16px clamp(18px, 5vw, 64px); border-bottom: 1px solid var(--line); background: rgba(255, 254, 249, 0.94); position: sticky; top: 0; z-index: 5; backdrop-filter: blur(12px); }
-.brand { display: inline-flex; align-items: center; gap: 10px; font-weight: 800; text-decoration: none; color: var(--ink); }
+.site-header { display: flex; align-items: center; gap: 18px; justify-content: space-between; width: 100%; max-width: 100%; padding: 14px clamp(18px, 5vw, 64px); border-bottom: 1px solid var(--line); background: rgba(255, 253, 247, 0.94); position: sticky; top: 0; z-index: 5; backdrop-filter: blur(14px); }
+.brand { display: inline-flex; align-items: center; gap: 10px; flex: 0 0 auto; font-weight: 850; text-decoration: none; color: var(--ink); }
 .brand img { border-radius: 12px; }
-.nav, .app-cta-nav, .language-nav, .site-footer nav { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; min-width: 0; max-width: 100%; }
-.nav a, .language-nav a, .site-footer a { overflow-wrap: anywhere; font-size: 14px; text-decoration: none; font-weight: 650; }
-.app-cta { display: inline-flex; min-height: 38px; align-items: center; justify-content: center; max-width: 100%; border: 1px solid var(--line); border-radius: 999px; padding: 0 14px; background: var(--white); color: var(--green-dark); font-size: 13px; font-weight: 800; text-align: center; text-decoration: none; white-space: normal; }
-.app-cta.primary { border-color: var(--green); background: var(--green); color: var(--white); }
+.nav, .language-nav, .site-footer nav { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; min-width: 0; max-width: 100%; }
+.nav { justify-content: center; margin-left: auto; }
+.nav a, .language-nav a, .site-footer a { overflow-wrap: anywhere; font-size: 14px; text-decoration: none; font-weight: 700; }
+.app-cta { display: inline-flex; min-height: 38px; align-items: center; justify-content: center; max-width: 100%; border: 1px solid var(--line); border-radius: 999px; padding: 0 14px; background: var(--paper); color: var(--leaf-dark); font-size: 13px; font-weight: 850; text-align: center; text-decoration: none; white-space: normal; }
+.app-cta.primary { border-color: var(--leaf); background: var(--leaf); color: #fff; box-shadow: 0 8px 24px rgba(63, 143, 76, 0.18); }
 .language-nav { padding-left: 12px; border-left: 1px solid var(--line); }
 main { overflow: hidden; }
-.hero, .split-section, .content-section, .page-hero, .legal-content, .screenshot-section { width: min(1160px, calc(100% - 36px)); margin-inline: auto; }
-.hero { min-height: 78vh; display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(360px, 1.1fr); gap: clamp(28px, 6vw, 72px); align-items: center; padding: clamp(48px, 8vw, 96px) 0 42px; }
-.product-hero { position: relative; }
-.product-hero::before, .product-hero::after { content: ""; position: absolute; z-index: -1; border-radius: 999px; }
-.product-hero::before { width: 420px; height: 420px; right: -140px; top: 46px; background: var(--mint); }
-.product-hero::after { width: 360px; height: 360px; left: -180px; bottom: -90px; background: var(--sun); }
-.hero-showcase { position: relative; min-height: 620px; display: grid; place-items: center; }
-.hero-showcase::before { content: ""; position: absolute; inset: 44px 36px 24px 56px; border-radius: 34px; background: linear-gradient(135deg, #e9f8ed, #fffdf5); border: 1px solid #d7ead8; box-shadow: 0 28px 90px rgba(20, 83, 45, 0.12); }
-.hero-phone { position: absolute; object-fit: contain; filter: drop-shadow(0 28px 44px rgba(20, 32, 22, 0.18)); }
-.primary-phone { left: 0; bottom: 20px; width: min(42%, 260px); max-height: 580px; border-radius: 24px; }
-.secondary-phone { right: 0; top: 0; width: min(68%, 420px); max-height: 660px; }
-.eyebrow { margin: 0 0 12px; color: var(--green-dark); font-weight: 850; text-transform: uppercase; letter-spacing: 0; font-size: 13px; }
+.hero, .split-section, .content-section, .page-hero, .legal-content, .value-section, .final-cta { width: min(1160px, calc(100% - 36px)); margin-inline: auto; }
+.hero { min-height: 720px; display: grid; grid-template-columns: minmax(0, 0.95fr) minmax(380px, 1.05fr); gap: clamp(32px, 5vw, 64px); align-items: center; padding: clamp(56px, 7vw, 88px) 0 48px; }
+.hero-copy { max-width: 760px; }
+.hero-showcase { position: relative; min-height: 560px; display: grid; place-items: center; }
+.loop-showcase::before { content: ""; position: absolute; inset: 34px; border-radius: 38px; background: linear-gradient(135deg, #eaf6ec, #fffdf7 52%, #fff1c0); border: 1px solid #d4e7d4; box-shadow: 0 30px 90px rgba(23, 32, 22, 0.12); }
+.loop-orbit { position: relative; width: min(100%, 520px); aspect-ratio: 1; border: 1px dashed rgba(23, 71, 42, 0.28); border-radius: 50%; }
+.loop-orbit::before { content: ""; position: absolute; inset: 22%; border: 1px solid rgba(79, 124, 172, 0.22); border-radius: 50%; }
+.loop-node { position: absolute; display: grid; gap: 6px; justify-items: center; width: 118px; padding: 12px 10px; border: 1px solid var(--line); border-radius: 12px; background: rgba(255, 255, 255, 0.94); color: var(--muted); font-weight: 800; box-shadow: 0 14px 38px rgba(23, 32, 22, 0.1); }
+.loop-node strong { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 50%; background: var(--leaf-soft); color: var(--leaf-dark); }
+.node-1 { top: -5%; left: 50%; transform: translateX(-50%); }
+.node-2 { top: 28%; right: -5%; }
+.node-3 { bottom: -2%; right: 12%; }
+.node-4 { bottom: -2%; left: 12%; }
+.node-5 { top: 28%; left: -5%; }
+.system-card { position: absolute; display: grid; gap: 8px; width: min(68%, 280px); padding: 24px; border-radius: 16px; background: var(--paper); border: 1px solid var(--line); text-align: center; box-shadow: 0 18px 50px rgba(23, 32, 22, 0.14); }
+.system-card strong { color: var(--leaf-dark); font-size: 28px; }
+.system-card span { color: var(--muted); font-weight: 800; }
+.eyebrow { margin: 0 0 12px; color: var(--leaf-dark); font-weight: 850; text-transform: uppercase; letter-spacing: 0; font-size: 13px; }
 h1, h2, h3 { letter-spacing: 0; line-height: 1.08; margin: 0; }
-h1 { font-size: clamp(42px, 6vw, 76px); max-width: 900px; }
+h1 { font-size: clamp(42px, 6vw, 74px); max-width: 940px; }
 h2 { font-size: clamp(30px, 4vw, 48px); margin-bottom: 16px; }
 h3 { font-size: 20px; margin-bottom: 8px; }
 p, li { color: var(--muted); line-height: 1.65; font-size: 17px; }
-.lead { font-size: clamp(18px, 2vw, 22px); max-width: 720px; }
+.lead { font-size: clamp(18px, 2vw, 22px); max-width: 760px; }
 .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin: 26px 0 14px; }
-.button { display: inline-flex; min-height: 48px; align-items: center; justify-content: center; max-width: 100%; border-radius: 999px; padding: 0 22px; font-weight: 800; text-align: center; text-decoration: none; white-space: normal; }
-.button.primary { background: var(--green); color: var(--white); }
-.button.secondary { border: 1px solid var(--line); background: var(--white); color: var(--green-dark); }
+.button { display: inline-flex; min-height: 48px; align-items: center; justify-content: center; max-width: 100%; border-radius: 999px; padding: 0 22px; font-weight: 850; text-align: center; text-decoration: none; white-space: normal; }
+.button.primary { background: var(--leaf); color: #fff; box-shadow: 0 12px 28px rgba(63, 143, 76, 0.2); }
+.button.secondary { border: 1px solid var(--line); background: var(--paper); color: var(--leaf-dark); }
+.button, .app-cta, .google-play-badge { transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease; }
+.button:hover, .app-cta:hover, .google-play-badge:hover { transform: translateY(-2px); }
+.button.primary:hover, .app-cta.primary:hover { box-shadow: 0 16px 34px rgba(63, 143, 76, 0.26); }
+.app-download-block { display: grid; gap: 10px; justify-items: start; max-width: 620px; margin: 14px 0 8px; }
+.google-play-badge { display: inline-flex; line-height: 0; border-radius: 8px; }
+.google-play-badge img { width: 180px; height: auto; display: block; }
+.web-cta-links { display: flex; flex-wrap: wrap; gap: 10px 14px; }
+.web-cta-links a { font-weight: 850; font-size: 14px; }
+.download-notice { margin: 0; max-width: 620px; font-size: 14px; line-height: 1.5; }
 .trust-note { font-size: 14px; }
-.flow-strip { width: min(920px, calc(100% - 36px)); margin: 0 auto 44px; display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
-.flow-strip span { display: inline-flex; align-items: center; gap: 8px; border: 1px solid var(--line); border-radius: 999px; padding: 8px 14px; background: var(--white); color: var(--muted); font-weight: 700; }
-.flow-strip strong { display: grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; background: var(--green-soft); color: var(--green-dark); }
-.proof-strip { width: min(1120px, calc(100% - 36px)); margin: 0 auto 28px; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
-.proof-strip article { min-height: 104px; padding: 18px; border-radius: 14px; border: 1px solid var(--line); background: var(--white); box-shadow: 0 12px 40px rgba(20, 83, 45, 0.06); }
-.proof-strip strong { display: block; color: var(--green-dark); font-size: 22px; line-height: 1.1; }
-.proof-strip span { display: block; margin-top: 8px; color: var(--muted); font-weight: 750; }
-.split-section { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(24px, 5vw, 64px); align-items: center; padding: 72px 0; }
-.split-section img { width: 100%; border-radius: 20px; border: 1px solid var(--line); background: var(--white); }
-.screenshot-section { display: grid; grid-template-columns: minmax(260px, 0.7fr) minmax(360px, 1.3fr); gap: clamp(24px, 5vw, 64px); align-items: center; padding: 78px clamp(20px, 4vw, 44px); margin-top: 28px; border-radius: 26px; border: 1px solid #d7ead8; background: linear-gradient(135deg, #f0faf3 0%, #fffef9 58%, #fff6d6 100%); }
-.screenshot-copy h2 { font-size: clamp(28px, 3.8vw, 46px); }
-.wide-screenshot { width: min(100%, 760px); max-height: 920px; justify-self: center; object-fit: contain; border-radius: 30px; filter: drop-shadow(0 30px 50px rgba(20, 32, 22, 0.16)); }
+.value-section { padding: 40px 0 62px; }
+.value-section > h2 { max-width: 720px; }
+.value-grid, .feature-grid, .trust-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; margin-top: 28px; }
+.value-card, .feature-card, .trust-card, .pricing-card, .legal-content article, .flow-board article, .faq-list details { background: var(--paper); border: 1px solid var(--line); border-radius: 12px; box-shadow: 0 12px 34px rgba(23, 32, 22, 0.055); }
+.value-card { padding: 22px; border-top: 4px solid var(--leaf); }
+.value-card:nth-child(2) { border-top-color: var(--blue); }
+.value-card:nth-child(3) { border-top-color: var(--gold); }
+.value-card:nth-child(4) { border-top-color: var(--rose); }
+.split-section { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: clamp(24px, 5vw, 64px); align-items: center; padding: 72px 0; }
+.loop-section { border-top: 1px solid var(--line); }
+.how-steps { display: grid; gap: 10px; padding-left: 24px; margin-top: 22px; }
+.how-steps li { padding-left: 4px; font-weight: 650; }
+.flow-board { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; align-items: stretch; }
+.flow-board article { min-height: 132px; padding: 16px; display: grid; align-content: center; justify-items: center; text-align: center; position: relative; }
+.flow-board article:not(:last-child)::after { content: "→"; position: absolute; right: -13px; top: 50%; transform: translateY(-50%); color: var(--sage); font-weight: 900; z-index: 1; }
+.flow-board span { display: grid; place-items: center; width: 42px; height: 42px; border-radius: 50%; background: var(--leaf-soft); color: var(--leaf-dark); font-weight: 900; margin-bottom: 10px; }
+.flow-board strong { color: var(--ink); }
 .content-section { padding: 72px 0; }
-.feature-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin-top: 28px; }
-.feature-card { background: var(--white); border: 1px solid var(--line); border-radius: 14px; padding: 22px; box-shadow: 0 12px 40px rgba(20, 83, 45, 0.05); }
+.feature-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.feature-card, .trust-card { padding: 24px; }
+.feature-card { min-height: 190px; transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease; }
+.feature-card:hover { transform: translateY(-4px); border-color: #c6dcc8; box-shadow: 0 20px 46px rgba(23, 32, 22, 0.09); }
+.feature-grid .feature-card:last-child { grid-column: 2; }
 .feature-card img { margin-bottom: 18px; }
-.app-preview img { width: min(100%, 360px); max-height: 620px; object-fit: contain; justify-self: center; }
-.readiness-list { margin: 20px 0 0; padding-left: 22px; }
-.readiness-list li { margin: 8px 0; font-weight: 650; }
 .trust-section { border-top: 1px solid var(--line); }
+.trust-grid { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+.trust-card { grid-column: span 2; }
+.trust-card:nth-child(4) { grid-column: 2 / span 2; }
+.trust-card:nth-child(5) { grid-column: 4 / span 2; }
+.faq-section { padding-top: 20px; }
+.faq-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 22px; align-items: start; }
+.faq-list details:last-child { grid-column: 1 / -1; }
+.faq-list details { padding: 18px 20px; }
+.faq-list summary { cursor: pointer; color: var(--ink); font-weight: 850; }
+.faq-list p { margin-bottom: 0; }
+.final-cta { margin-bottom: 74px; padding: clamp(28px, 5vw, 48px); border-radius: 12px; border: 1px solid #d4e7d4; background: linear-gradient(135deg, #eaf6ec, #fffdf7); }
+.final-cta p { max-width: 720px; }
 .page-hero { padding: 72px 0 28px; }
 .page-hero h1 { font-size: clamp(38px, 5vw, 64px); }
 .legal-content { padding: 20px 0 72px; display: grid; gap: 22px; }
-.legal-content article { background: var(--white); border: 1px solid var(--line); border-radius: 14px; padding: clamp(20px, 4vw, 34px); }
+.legal-content article { padding: clamp(20px, 4vw, 34px); }
 .legal-content ul { padding-left: 22px; }
 .pricing-grid { width: min(1120px, calc(100% - 36px)); margin: 0 auto 28px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
-.pricing-card { background: var(--white); border: 1px solid var(--line); border-radius: 14px; padding: clamp(22px, 4vw, 36px); }
-.pricing-card.featured { border-color: var(--green); box-shadow: 0 18px 60px rgba(20, 83, 45, 0.12); }
+.pricing-card { padding: clamp(22px, 4vw, 36px); }
+.pricing-card.featured { border-color: var(--leaf); box-shadow: 0 18px 60px rgba(63, 143, 76, 0.12); }
 .pricing-card ul { padding-left: 22px; }
-.price-line { color: var(--green-dark); font-size: 20px; font-weight: 850; }
+.price-line { color: var(--leaf-dark); font-size: 20px; font-weight: 850; }
 .pricing-note { padding-top: 10px; }
-.site-footer { border-top: 1px solid var(--line); padding: 28px clamp(18px, 5vw, 64px); display: grid; gap: 10px; background: var(--white); }
+.launch-state { padding-top: 34px; padding-bottom: 22px; }
+.site-footer { border-top: 1px solid var(--line); padding: 28px clamp(18px, 5vw, 64px); display: grid; gap: 10px; background: var(--paper); }
 .site-footer p { margin: 0; font-size: 14px; }
 .utility-page { min-height: 100vh; display: grid; place-content: center; padding: 24px; text-align: center; }
 .web-access-page { width: min(720px, calc(100% - 36px)); margin: 0 auto; justify-items: center; }
@@ -882,36 +947,41 @@ p, li { color: var(--muted); line-height: 1.65; font-size: 17px; }
 .utility-language-nav a { font-size: 14px; font-weight: 750; text-decoration: none; }
 .account-form { width: min(100%, 440px); display: grid; gap: 10px; margin-top: 18px; text-align: left; }
 .account-form label { color: var(--ink); font-size: 14px; font-weight: 800; }
-.account-form input { width: 100%; min-height: 48px; border: 1px solid var(--line); border-radius: 8px; padding: 0 14px; background: var(--white); color: var(--ink); font: inherit; }
+.account-form input { width: 100%; min-height: 48px; border: 1px solid var(--line); border-radius: 8px; padding: 0 14px; background: var(--paper); color: var(--ink); font: inherit; }
 .account-form .button { width: 100%; border: 0; cursor: pointer; }
 .form-status { min-height: 28px; margin: 4px 0 0; font-size: 14px; line-height: 1.45; text-align: center; }
-@media (max-width: 860px) {
+@media (max-width: 1040px) {
   .site-header { align-items: flex-start; flex-direction: column; }
-  .brand, .nav, .app-cta-nav, .language-nav { width: 100%; }
+  .brand, .nav, .language-nav { width: 100%; }
+  .nav { justify-content: flex-start; margin-left: 0; }
   .language-nav { border-left: 0; padding-left: 0; }
-  .hero, .split-section, .screenshot-section { grid-template-columns: 1fr; }
+  .hero, .split-section { grid-template-columns: 1fr; }
   .hero { min-height: auto; padding-top: 36px; }
-  .hero-showcase { min-height: 540px; }
-  .primary-phone { width: 42%; left: 2%; }
-  .secondary-phone { width: 72%; right: -2%; }
-  .proof-strip { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .feature-grid, .pricing-grid { grid-template-columns: 1fr; }
+  .hero-showcase { min-height: 500px; }
+  .value-grid, .trust-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .feature-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .feature-grid .feature-card:last-child, .trust-card, .trust-card:nth-child(4), .trust-card:nth-child(5) { grid-column: auto; }
+  .flow-board { grid-template-columns: 1fr; }
+  .flow-board article:not(:last-child)::after { content: "↓"; right: auto; top: auto; bottom: -18px; left: 50%; transform: translateX(-50%); }
 }
-@media (max-width: 560px) {
-  h1 { font-size: clamp(34px, 11vw, 42px); }
+@media (max-width: 640px) {
+  h1 { font-size: clamp(34px, 10vw, 42px); line-height: 1.12; }
   .page-hero h1 { font-size: clamp(32px, 10vw, 38px); }
-  .hero-actions { width: 100%; }
-  .button { min-height: 44px; padding: 0 18px; }
-  .nav, .app-cta-nav, .language-nav { gap: 9px; }
-  .app-cta { min-height: 34px; padding: 0 10px; }
-  h1 { font-size: clamp(34px, 9vw, 40px); line-height: 1.12; }
   .lead { font-size: 17px; }
-  .hero-showcase { min-height: 440px; }
-  .hero-showcase::before { inset: 30px 0 24px; }
-  .primary-phone { width: 46%; bottom: 8px; }
-  .secondary-phone { width: 76%; top: 8px; }
-  .proof-strip { grid-template-columns: 1fr; }
-  .screenshot-section { width: min(100% - 24px, 1160px); padding: 34px 16px; }
+  .button { min-height: 44px; padding: 0 18px; }
+  .nav, .language-nav { gap: 9px; }
+  .app-cta { min-height: 34px; padding: 0 10px; }
+  .hero-showcase { min-height: 430px; }
+  .loop-showcase::before { inset: 14px 0; }
+  .loop-orbit { width: min(100%, 360px); }
+  .loop-node { width: 94px; font-size: 13px; padding: 10px 8px; }
+  .node-2 { right: -2%; }
+  .node-5 { left: -2%; }
+  .system-card { width: min(72%, 230px); padding: 18px; }
+  .system-card strong { font-size: 22px; }
+  .value-grid, .feature-grid, .trust-grid, .pricing-grid, .faq-list { grid-template-columns: 1fr; }
+  .faq-list details:last-child { grid-column: auto; }
+  .final-cta { width: min(100% - 24px, 1160px); }
 }
 `);
 

@@ -10,7 +10,8 @@
     "privacy": "Privacy",
     "terms": "Terms",
     "support": "Support",
-    "deleteAccount": "Delete Account"
+    "deleteAccount": "Delete Account",
+    "primaryCta": "Sign in"
   },
   "language": {
     "label": "Language",
@@ -24,8 +25,8 @@
       "description": "The requested VivaPantry page could not be found."
     },
     "home": {
-      "title": "VivaPantry | Plan meals, shop smarter, waste less.",
-      "description": "VivaPantry connects your pantry, recipes, receipts, prices, and meal plans so your household knows what to cook and what to buy."
+      "title": "VivaPantry | Know what to cook, buy, and use at home.",
+      "description": "VivaPantry connects pantry tracking, meal planning, grocery lists, receipts, and household preferences into one practical food-planning system."
     },
     "privacy": {
       "title": "Privacy Policy | VivaPantry",
@@ -50,9 +51,9 @@
   },
   "home": {
     "logoAlt": "VivaPantry logo",
-    "eyebrow": "AI-powered grocery and meal planning",
-    "heroTitle": "Plan meals, shop smarter, waste less.",
-    "heroText": "VivaPantry connects your pantry, recipes, receipts, prices, and meal plans so your household knows what to cook and what to buy.",
+    "eyebrow": "Household food planning",
+    "heroTitle": "Know what to cook, what to buy, and what's already at home.",
+    "heroText": "VivaPantry connects pantry tracking, meal planning, grocery lists, receipts, and household preferences into one practical weekly food-planning system.",
     "flowAria": "VivaPantry Plan Shop Store Cook Repeat flow",
     "flow": {
       "plan": {
@@ -77,9 +78,9 @@
       }
     },
     "primaryActions": "Primary actions",
-    "primaryCta": "Ask about mobile app access",
-    "secondaryCta": "View privacy policy",
-    "trustNote": "No medical advice. No diet promises. Practical household planning support.",
+    "primaryCta": "Create account",
+    "secondaryCta": "See how it works",
+    "trustNote": "AI suggestions are reviewable. VivaPantry does not provide medical or nutritional advice.",
     "previewAria": "VivaPantry app preview",
     "previewThisWeek": "This week",
     "previewSuggestedMeal": "Suggested meal",
@@ -91,9 +92,9 @@
     "previewPantryValue": "4 items running low",
     "previewShopping": "Shopping list",
     "previewShoppingValue": "12 focused items",
-    "loopEyebrow": "From receipt to meal plan",
-    "loopTitle": "A practical loop for the food you already buy.",
-    "loopText": "VivaPantry connects the everyday steps of household food planning, from what came home in the grocery bag to what should go on next week's list.",
+    "loopEyebrow": "Core loop",
+    "loopTitle": "Plan → Shop → Store → Cook → Repeat",
+    "loopText": "VivaPantry is not just recipes or just grocery lists. It is a household loop for deciding what to cook, what to buy, and what to use next.",
     "loopAria": "VivaPantry core loop",
     "loopBenefit": "Reduce duplicate purchases and food waste with a clearer view of what you have and what you need.",
     "loop": {
@@ -119,15 +120,15 @@
       }
     },
     "featuresEyebrow": "Features",
-    "featuresTitle": "Everything a weekly planning routine needs.",
+    "featuresTitle": "The pieces of household food planning in one place.",
     "features": {
       "pantryTracking": {
         "title": "Pantry tracking",
-        "text": "Keep pantry staples, quantities, and low-stock items organized so planning starts with what is already at home."
+        "text": "Track staples, quantities, low-stock items, and what should be used soon."
       },
       "receiptScanning": {
         "title": "Receipt scanning",
-        "text": "Turn receipts into useful grocery records for purchases, prices, and pantry updates."
+        "text": "Capture purchases and prices so shopping history can improve future planning."
       },
       "aiMealPlanning": {
         "title": "AI meal planning",
@@ -135,37 +136,128 @@
       },
       "groceryLists": {
         "title": "Grocery lists",
-        "text": "Build focused shopping lists from planned meals and pantry gaps instead of starting from scratch."
+        "text": "Create practical shopping lists from planned meals and pantry gaps."
       },
       "recipes": {
-        "title": "Recipe organization",
-        "text": "Save recipes, ingredients, and instructions so favorite meals can become reusable planning building blocks."
+        "title": "Recipes",
+        "text": "Save recipes and turn favorite meals into reusable planning building blocks."
       },
       "householdPreferences": {
         "title": "Household preferences",
-        "text": "Plan around household size, cooking time, dietary notes, regional settings, and practical weeknight needs."
+        "text": "Keep household size, dietary notes, budget preferences, and weeknight needs visible."
+      },
+      "mealPlanning": {
+        "title": "Meal planning",
+        "text": "Plan the week around preferences, schedule, pantry context, and real constraints."
       }
     },
     "readinessEyebrow": "Mobile app access",
     "readinessTitle": "Built for weekly planning, real groceries, and real households.",
-    "readinessText": "Use the mobile app for the full VivaPantry experience. Web access and iOS availability are being prepared separately.",
-    "readinessCta": "Ask about app access",
-    "readinessSecondary": "Read the privacy policy",
+    "readinessText": "Use the Android app for mobile planning, or sign in on the web from any supported browser.",
+    "readinessCta": "Open web app",
+    "readinessSecondary": "Sign in on web",
     "readiness": {
       "weeklyPlanning": "Designed for pantry-aware meal planning",
       "receiptScans": "Receipt scans can improve pantry and price history",
       "shoppingLists": "Shopping lists stay focused on what you still need",
       "householdPreferences": "Household preferences guide smarter suggestions"
     },
-    "trustEyebrow": "Trust and compliance",
-    "trustTitle": "Clear policies before you start planning.",
-    "trustText": "Review how VivaPantry handles privacy, terms, support, subscriptions, AI suggestions, and account deletion."
+    "trustEyebrow": "Trust and safety",
+    "trustTitle": "Practical suggestions, clear limits.",
+    "trustText": "VivaPantry is built to support household decisions while keeping important choices reviewable and transparent.",
+    "valueEyebrow": "Why households use it",
+    "valueTitle": "A calmer way to plan food every week.",
+    "valueCards": [
+      {
+        "title": "Pantry-aware planning",
+        "text": "Start meal decisions from what is already stocked, low, or likely to expire."
+      },
+      {
+        "title": "Grocery lists from gaps",
+        "text": "Turn planned meals and pantry gaps into a focused shopping list."
+      },
+      {
+        "title": "Receipts and price history",
+        "text": "Use receipt records to understand what came home and how prices change over time."
+      },
+      {
+        "title": "Household preferences",
+        "text": "Plan around people, routines, cooking time, dietary notes, and regional settings."
+      }
+    ],
+    "howSteps": [
+      "Add pantry items or scan receipts.",
+      "Plan meals around your household.",
+      "Build a grocery list from pantry gaps.",
+      "Shop and update what came home.",
+      "Use real history to improve the next plan."
+    ],
+    "trustCards": [
+      {
+        "title": "AI suggestions are reviewable",
+        "text": "Review meal ideas, lists, receipt extraction, ingredients, and prices before relying on them."
+      },
+      {
+        "title": "No medical or diet promises",
+        "text": "VivaPantry is planning support, not medical, nutrition, allergy, or diet advice."
+      },
+      {
+        "title": "Privacy and deletion support",
+        "text": "Privacy, support, and account deletion routes remain available from the public site."
+      },
+      {
+        "title": "Subscription transparency",
+        "text": "Premium terms are confirmed by the relevant app store or payment provider."
+      },
+      {
+        "title": "Household-based premium",
+        "text": "Premium is positioned around household planning where shared preferences and routines matter."
+      }
+    ],
+    "faqEyebrow": "FAQ",
+    "faqTitle": "Questions before you start",
+    "faqs": [
+      {
+        "q": "Is VivaPantry only a recipe app?",
+        "a": "No. Recipes are one part of a larger Plan, Shop, Store, Cook, Repeat system for household food planning."
+      },
+      {
+        "q": "Does VivaPantry give medical or nutrition advice?",
+        "a": "No. VivaPantry does not provide medical, nutritional, allergy, or diet advice. Review all suggestions before using them."
+      },
+      {
+        "q": "How does receipt scanning help?",
+        "a": "Receipts can help update what came home, preserve purchase history, and build a clearer price record over time."
+      },
+      {
+        "q": "Is premium for one person or a household?",
+        "a": "Premium is designed around household planning where appropriate, including shared preferences, routines, and weekly coordination."
+      },
+      {
+        "q": "Can I delete my account?",
+        "a": "Yes. The Delete Account page explains how to request deletion and what data categories are covered."
+      }
+    ],
+    "finalEyebrow": "Ready for the weekly loop",
+    "finalTitle": "Make the next grocery trip easier to plan.",
+    "finalText": "Use VivaPantry to connect what is at home, what your household wants to cook, and what still needs to be bought.",
+    "finalCta": "Create account",
+    "finalSecondary": "Sign in on web"
   },
   "webAccess": {
-    "navLabel": "VivaPantry web access",
-    "openWeb": "Web access status",
+    "navLabel": "VivaPantry app access",
+    "openWeb": "Open web app",
     "signIn": "Sign in",
-    "createAccount": "Sign up"
+    "createAccount": "Create account",
+    "openWebAppCta": "Open web app",
+    "webSignInCta": "Sign in on web",
+    "createAccountCta": "Create account",
+    "googlePlayCta": "Get VivaPantry on Google Play",
+    "androidEarlyAccessCta": "Join Android early access on Google Play",
+    "appDownloadAria": "VivaPantry app download and web access options",
+    "googlePlayBadgeAlt": "Get it on Google Play",
+    "testingNotice": "Android early access may require being added as a tester and opting in through Google Play. Web sign-in is live for existing accounts.",
+    "productionNotice": "Download VivaPantry from Google Play. Billing and subscriptions are managed through Google Play where applicable."
   },
   "accountAccess": {
     "eyebrow": "VivaPantry Web",
@@ -178,22 +270,22 @@
     "newPasswordLabel": "New password",
     "newPasswordPlaceholder": "At least 8 characters",
     "app": {
-      "title": "VivaPantry web access",
-      "description": "VivaPantry web app access information.",
-      "heading": "Full web app access is being prepared",
-      "text": "This page is reserved for VivaPantry web access. Use the mobile app for the full experience while the authenticated web app is being prepared."
+      "title": "VivaPantry web app | VivaPantry",
+      "description": "Open the VivaPantry web app.",
+      "heading": "Open VivaPantry on the web",
+      "text": "The VivaPantry web app is live. Sign in with your account or create a new one from the web entry points."
     },
     "signIn": {
       "title": "Sign in | VivaPantry",
-      "description": "VivaPantry web account access status.",
-      "heading": "Web sign-in is not available yet",
-      "text": "Full browser sign-in is not launched on this public site yet. You can reset your password here, use the mobile app for the full experience, or contact support for account help."
+      "description": "Sign in to VivaPantry on the web.",
+      "heading": "Sign in to VivaPantry",
+      "text": "Use the launched VivaPantry web sign-in page to access your account in a browser."
     },
     "createAccount": {
-      "title": "Sign up | VivaPantry",
-      "description": "VivaPantry account setup status.",
-      "heading": "Web account creation is not available yet",
-      "text": "Account creation is currently handled in the mobile app while dedicated web access is being prepared. Contact support if you are interested in web access or need help with your account."
+      "title": "Create account | VivaPantry",
+      "description": "Create a VivaPantry account on the web.",
+      "heading": "Create your VivaPantry account",
+      "text": "Use the launched VivaPantry web account page to get started in a browser."
     },
     "resetPasswordPage": {
       "title": "Reset password | VivaPantry",
@@ -230,27 +322,31 @@
   },
   "pricing": {
     "eyebrow": "Pricing",
-    "title": "Start with practical planning. Upgrade when your household needs more.",
-    "lead": "VivaPantry supports starter planning tools and premium subscription features for households that want deeper AI-assisted planning, scanning, and weekly coordination.",
+    "title": "Clear starter access. Premium when your household needs more.",
+    "lead": "VivaPantry includes practical starter planning tools and premium subscription features for households that want deeper pantry-aware planning, receipt workflows, and weekly coordination.",
     "cardsLabel": "VivaPantry pricing options",
     "freeEyebrow": "Free",
-    "freeTitle": "Free starter",
-    "freePrice": "Starter access",
+    "freeTitle": "Free",
+    "freePrice": "Starter planning access",
     "freeItems": [
-      "Organize basic pantry, recipe, and shopping list workflows.",
-      "Try the weekly planning loop before deciding whether premium features are useful for your household.",
-      "Use support and account deletion resources from the public website."
+      "Organize basic pantry, recipe, and grocery-list workflows.",
+      "Try the Plan, Shop, Store, Cook, Repeat loop before upgrading.",
+      "Use public support, privacy, terms, and account deletion resources."
     ],
     "premiumEyebrow": "Premium",
-    "premiumTitle": "Premium subscription",
-    "premiumPrice": "Premium features are available through subscription",
+    "premiumTitle": "Premium household planning",
+    "premiumPrice": "Subscription terms confirmed in the app store",
     "premiumItems": [
       "AI-assisted meal planning from pantry, recipes, preferences, and weekly goals.",
       "Receipt and pantry scanning workflows where available in the app.",
-      "Weather context in weekly suggestions where supported.",
-      "Household and family planning support for shared preferences and routines."
+      "Household preference support for shared routines and practical weekly decisions.",
+      "Premium access may support household-based planning features where available."
     ],
-    "note": "Premium features are available through subscription. Final prices, trials, billing terms, feature availability, and regional availability may vary by region and app store."
+    "note": "Final price, trial availability, renewal, cancellation, refund terms, regional availability, and exact premium entitlements are confirmed by the relevant app store or payment provider. VivaPantry avoids dark-pattern subscription language and does not promise medical or nutritional outcomes.",
+    "launchStateEyebrow": "App access",
+    "launchStateTitle": "Android early access and web sign-in are available.",
+    "testingLaunchText": "Android early access may require being added as a tester and opting in through Google Play. Web sign-in and account creation are available through the public web app routes. Premium purchases are not offered on the marketing website.",
+    "productionLaunchText": "VivaPantry is available on Google Play where supported. Billing and subscriptions are managed through Google Play where applicable. Premium purchases are not offered on the marketing website."
   },
   "terms": {
     "eyebrow": "Terms of Use",
