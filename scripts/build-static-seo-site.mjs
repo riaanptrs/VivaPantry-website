@@ -1,12 +1,13 @@
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 
-const root = path.resolve('pantrypal-website');
+const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const siteUrl = 'https://vivapantry.com';
 const supportEmail = 'support@vivapantry.com';
 const logoPath = '/assets/Mainicon.png';
 const ogImage = `${siteUrl}${logoPath}`;
-const appVersion = '1.0.1';
+const appVersion = '1.0.2';
 const androidPackage = 'com.riaan.vivapantry';
 const currentYear = new Date().getFullYear();
 const webAccessRoutes = {
@@ -255,6 +256,7 @@ function homeBody(locale) {
     receiptScanning: '/assets/icons/receipt-scan.svg',
     aiMealPlanning: '/assets/icons/ai-spark.svg',
     groceryLists: '/assets/icons/shopping-list.svg',
+    shoppingVoiceCommands: '/assets/icons/shopping-list.svg',
     recipes: '/assets/icons/recipes.svg',
     householdPreferences: '/assets/icons/household.svg',
   };

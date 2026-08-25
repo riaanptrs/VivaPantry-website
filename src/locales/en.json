@@ -137,6 +137,10 @@
         "title": "Grocery lists",
         "text": "Build focused shopping lists from planned meals and pantry gaps instead of starting from scratch."
       },
+      "shoppingVoiceCommands": {
+        "title": "Shopping voice commands",
+        "text": "Say or type commands to add items, mark groceries bought, remove items, or read your list in supported mobile builds."
+      },
       "recipes": {
         "title": "Recipe organization",
         "text": "Save recipes, ingredients, and instructions so favorite meals can become reusable planning building blocks."

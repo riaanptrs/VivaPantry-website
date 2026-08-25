@@ -137,6 +137,10 @@
         "title": "Listas de compras",
         "text": "Monte listas focadas a partir das refeições planejadas e das faltas da despensa."
       },
+      "shoppingVoiceCommands": {
+        "title": "Comandos de compras por voz",
+        "text": "Fale ou digite comandos para adicionar itens, marcar compras feitas, remover produtos ou ler sua lista em builds móveis compatíveis."
+      },
       "recipes": {
         "title": "Organização de receitas",
         "text": "Salve receitas, ingredientes e instruções para reutilizar seus pratos favoritos no planejamento."
