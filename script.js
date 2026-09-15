@@ -4,6 +4,6 @@ document.querySelectorAll('a[href^="#"]').forEach(function (link) {
     var target = document.querySelector(link.getAttribute('href'));
     if (!target) return;
     event.preventDefault();
-    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    target.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth', block: 'start' });
   });
 });
