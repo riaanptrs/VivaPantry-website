@@ -169,7 +169,7 @@ ${alternateTags}
   <link rel="stylesheet" href="/styles.css">
 ${schema}</head>
 <body>
-  <a class="skip-link" href="#main">Skip to content</a>
+  <a class="skip-link" href="#main">${esc(nav.skipToContent)}</a>
   <header class="site-header">
     <a class="brand" href="${hrefFor(locale, 'home')}" aria-label="${attr(nav.homeAria ?? 'VivaPantry home')}">
       <img src="${logoPath}" width="40" height="40" alt="">
@@ -598,6 +598,7 @@ ${formHtml}
       ${utilityLanguageLinks(locale, key)}
     </nav>
   </main>
+<script src="/script.js" defer></script>
 ${scriptHtml}</body>
 </html>
 `;
@@ -795,16 +796,7 @@ Sitemap: ${siteUrl}/sitemap.xml
 function writeAssets() {
   writePage('styles.css', readFileSync(path.join(root, 'styles/site.css'), 'utf8'));
 
-  writePage('script.js', `document.documentElement.classList.add('js-enabled');
-document.querySelectorAll('a[href^="#"]').forEach(function (link) {
-  link.addEventListener('click', function (event) {
-    var target = document.querySelector(link.getAttribute('href'));
-    if (!target) return;
-    event.preventDefault();
-    target.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth', block: 'start' });
-  });
-});
-`);
+  writePage('script.js', readFileSync(path.join(root, 'src/language-navigation.js'), 'utf8'));
 
   writePage('supabase-web-config.js', `window.VivaPantrySupabaseConfig = {
   supabaseUrl: '',

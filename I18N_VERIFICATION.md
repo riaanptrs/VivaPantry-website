@@ -44,3 +44,12 @@ Manual checks for GitHub Pages deployment at `https://vivapantry.com`.
    - Expected: redirects to `/en/privacy`.
    - Visit `/en/unknown-page`.
    - Expected: localized 404 content is shown.
+
+## Spanish release follow-up (2026-11-16)
+
+- Regional Spanish browser languages (`es-MX`, `es-AR`, `es-CO`, `es-CL`, `es-419`) now select `/es/` from the language-neutral homepage.
+- Manual language choices are saved as `vivapantry.locale`; a saved choice takes priority over browser language on unprefixed marketing routes.
+- Existing explicit `/es/`, `/en/`, and `/pt-BR/` links keep their language. Unprefixed English routes remain valid canonical English URLs.
+- Page selection, query parameters, and fragments survive language detection. Authentication callbacks, password-reset routes, and `/app/` are excluded from automatic redirects.
+- Spanish skip links and account-deletion cross-reference text are translated. The Spanish wording for compatible mobile builds and account email is corrected.
+- Static pages were regenerated from the localized source. `node --test tests/language-navigation.test.mjs` passes six tests covering navigation, unavailable storage, regional tags, protected routes, metadata, and generated Spanish pages. Tests simulate browser APIs; a full interactive browser session has not been exercised.

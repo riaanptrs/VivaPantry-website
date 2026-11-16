@@ -10,7 +10,8 @@
     "privacy": "Privacidad",
     "terms": "Términos",
     "support": "Soporte",
-    "deleteAccount": "Eliminar cuenta"
+    "deleteAccount": "Eliminar cuenta",
+    "skipToContent": "Saltar al contenido"
   },
   "language": {
     "label": "Idioma",
@@ -139,7 +140,7 @@
       },
       "shoppingVoiceCommands": {
         "title": "Comandos de compras por voz",
-        "text": "Di o escribe comandos para agregar artículos, marcar compras hechas, eliminar productos o leer tu lista en builds móviles compatibles."
+        "text": "Di o escribe comandos para agregar artículos, marcar compras hechas, eliminar productos o leer tu lista en versiones compatibles de la app móvil."
       },
       "recipes": {
         "title": "Organización de recetas",
@@ -266,13 +267,13 @@
     "eyebrow": "Soporte",
     "title": "Estamos aquí para ayudarte.",
     "lead": "Para soporte de VivaPantry, escribe a support@vivapantry.com e incluye el correo de la cuenta que usas en la app.",
-    "sections": "Contacto||Escribe a <a href=\"mailto:support@vivapantry.com\">support@vivapantry.com</a> para ayuda con la app, tu cuenta o solicitudes de eliminación de datos.|||Ayuda con inicio de sesión||Si no puedes iniciar sesión, incluye el correo usado para tu cuenta VivaPantry y una breve descripción de lo ocurrido. No envíes contraseñas.|||Recibos||Para problemas de escaneo de recibos, describe la tienda, el formato del recibo y si el problema fue la carga de imagen, extracción de artículos o coincidencia de precios.|||Planes de comida||Para problemas con planes, indica si el plan fue generado por IA o creado manualmente, y qué resultado esperabas.|||Listas de compras||Para problemas con listas, menciona si el artículo vino de una receta, plan de comida, recibo o entrada manual.|||Google y servicios de terceros||Para problemas con Google Maps, Google Drive, Google Play u otros servicios de terceros, describe la función usada, la hora aproximada, la tienda/enlace/cuenta involucrada si corresponde y cualquier mensaje de error visible. No envíes contraseñas, claves de API, tokens de acceso ni datos completos de pago.|||Eliminación de cuenta||Puedes solicitar la eliminación desde la página Eliminar cuenta o enviando un correo a soporte con el email de tu cuenta."
+    "sections": "Contacto||Escribe a <a href=\"mailto:support@vivapantry.com\">support@vivapantry.com</a> para ayuda con la app, tu cuenta o solicitudes de eliminación de datos.|||Ayuda con inicio de sesión||Si no puedes iniciar sesión, incluye el correo usado para tu cuenta VivaPantry y una breve descripción de lo ocurrido. No envíes contraseñas.|||Recibos||Para problemas de escaneo de recibos, describe la tienda, el formato del recibo y si el problema fue la carga de imagen, extracción de artículos o coincidencia de precios.|||Planes de comida||Para problemas con planes, indica si el plan fue generado por IA o creado manualmente, y qué resultado esperabas.|||Listas de compras||Para problemas con listas, menciona si el artículo vino de una receta, plan de comida, recibo o entrada manual.|||Google y servicios de terceros||Para problemas con Google Maps, Google Drive, Google Play u otros servicios de terceros, describe la función usada, la hora aproximada, la tienda/enlace/cuenta involucrada si corresponde y cualquier mensaje de error visible. No envíes contraseñas, claves de API, tokens de acceso ni datos completos de pago.|||Eliminación de cuenta||Puedes solicitar la eliminación desde la página Eliminar cuenta o enviando un correo a soporte con el correo electrónico de tu cuenta."
   },
   "delete-account": {
     "eyebrow": "Eliminar cuenta",
     "title": "Eliminación de Cuenta VivaPantry",
     "lead": "Puedes solicitar la eliminación de tu cuenta VivaPantry y los datos asociados a ella.",
-    "sections": "Cómo solicitar la eliminación||1. Envía un correo a <a href=\"mailto:support@vivapantry.com\">support@vivapantry.com</a> con el asunto \"Eliminar mi cuenta\".<br>2. Incluye en el correo la dirección usada para crear tu cuenta en VivaPantry.<br>3. Nuestro equipo confirmará la recepción y procesará la solicitud.|||Datos que se eliminarán||La solicitud de eliminación cubre estas categorías:||Información de la cuenta|Datos de perfil y preferencias|Artículos de despensa|Listas de compras|Recetas creadas o guardadas|Planes de comida|Datos asociados al uso de la aplicación|||Datos que pueden conservarse temporalmente||Algunos registros técnicos, registros de seguridad, datos de prevención de fraude o información necesaria para cumplir obligaciones legales pueden conservarse por un período limitado.|||Tiempo de procesamiento||Después de la confirmación de la solicitud, la eliminación de la cuenta y los datos se procesará en un plazo de hasta 30 días.|||Preguntas||Si tienes preguntas, contacta por correo a <a href=\"mailto:support@vivapantry.com\">support@vivapantry.com</a>.|||English version||This page is also available in <a href=\"/en/delete-account/\">English</a>."
+    "sections": "Cómo solicitar la eliminación||1. Envía un correo a <a href=\"mailto:support@vivapantry.com\">support@vivapantry.com</a> con el asunto \"Eliminar mi cuenta\".<br>2. Incluye en el correo la dirección usada para crear tu cuenta en VivaPantry.<br>3. Nuestro equipo confirmará la recepción y procesará la solicitud.|||Datos que se eliminarán||La solicitud de eliminación cubre estas categorías:||Información de la cuenta|Datos de perfil y preferencias|Artículos de despensa|Listas de compras|Recetas creadas o guardadas|Planes de comida|Datos asociados al uso de la aplicación|||Datos que pueden conservarse temporalmente||Algunos registros técnicos, registros de seguridad, datos de prevención de fraude o información necesaria para cumplir obligaciones legales pueden conservarse por un período limitado.|||Tiempo de procesamiento||Después de la confirmación de la solicitud, la eliminación de la cuenta y los datos se procesará en un plazo de hasta 30 días.|||Preguntas||Si tienes preguntas, contacta por correo a <a href=\"mailto:support@vivapantry.com\">support@vivapantry.com</a>.|||Versión en inglés||Esta página también está disponible en <a href=\"/en/delete-account/\" lang=\"en\">inglés</a>."
   },
   "notFound": {
     "eyebrow": "404",
