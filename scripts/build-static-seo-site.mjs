@@ -403,6 +403,7 @@ function pricingBody(locale) {
     </section>
     <section class="content-section pricing-note">
       <p>${esc(t.note)}</p>
+      <p>${esc(t.voiceNote)}</p>
     </section>`;
 }
 
